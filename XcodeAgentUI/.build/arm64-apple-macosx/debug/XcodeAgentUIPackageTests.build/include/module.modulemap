@@ -1,3 +1,0 @@
-module XcodeAgentUIPackageTests {
-    header "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUIPackageTests.build/include/XcodeAgentUIPackageTests-Swift.h"
-}

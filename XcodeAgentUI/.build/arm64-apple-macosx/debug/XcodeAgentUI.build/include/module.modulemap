@@ -1,3 +1,0 @@
-module XcodeAgentUI {
-    header "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUI.build/include/XcodeAgentUI-Swift.h"
-}

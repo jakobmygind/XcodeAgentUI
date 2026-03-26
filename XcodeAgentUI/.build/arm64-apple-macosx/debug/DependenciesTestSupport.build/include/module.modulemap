@@ -1,3 +1,0 @@
-module DependenciesTestSupport {
-    header "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/DependenciesTestSupport.build/include/DependenciesTestSupport-Swift.h"
-}
