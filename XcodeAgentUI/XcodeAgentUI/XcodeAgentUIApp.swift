@@ -63,6 +63,22 @@ struct XcodeAgentUIApp: App {
         }
         .keyboardShortcut("0", modifiers: .command)
       }
+
+      CommandMenu("Connection") {
+        Button("Switch Connection") {
+          NotificationCenter.default.post(name: .showConnectionSwitcher, object: nil)
+        }
+        .keyboardShortcut("K", modifiers: [.command, .shift])
+
+        Button("Reconnect") {
+          NotificationCenter.default.post(name: .reconnectConnection, object: nil)
+        }
+        .keyboardShortcut("R", modifiers: [.command, .shift])
+
+        Button("Disconnect") {
+          NotificationCenter.default.post(name: .disconnectConnection, object: nil)
+        }
+      }
     }
 
     WindowGroup("Mission Control", id: "mission-control") {
@@ -104,6 +120,9 @@ struct OpenMissionControlButton: View {
 
 extension Notification.Name {
   static let navigateTo = Notification.Name("navigateTo")
+  static let showConnectionSwitcher = Notification.Name("showConnectionSwitcher")
+  static let reconnectConnection = Notification.Name("reconnectConnection")
+  static let disconnectConnection = Notification.Name("disconnectConnection")
 }
 
 // MARK: - Menu Bar Status Icon

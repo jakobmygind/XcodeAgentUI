@@ -34,6 +34,7 @@ struct ContentView: View {
   @Environment(AgentService.self) var agentService
   @State private var selection: SidebarItem = .missionControl
   @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
+  @State private var connectionManager = ConnectionManager()
 
   var body: some View {
     NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -68,10 +69,30 @@ struct ContentView: View {
       }
     }
     .navigationTitle("Xcode Agent Runner")
+    .toolbar {
+      ToolbarItem(placement: .status) {
+        ConnectionSwitcher(connectionManager: connectionManager)
+      }
+    }
     .onReceive(NotificationCenter.default.publisher(for: .navigateTo)) { notification in
       if let item = notification.object as? SidebarItem {
         selection = item
       }
+    }
+    .onReceive(NotificationCenter.default.publisher(for: .showConnectionSwitcher)) { _ in
+      // The ConnectionSwitcher is always visible in toolbar
+      // This notification could trigger a highlight or dropdown
+    }
+    .onReceive(NotificationCenter.default.publisher(for: .reconnectConnection)) { _ in
+      Task {
+        await connectionManager.reconnect()
+      }
+    }
+    .onReceive(NotificationCenter.default.publisher(for: .disconnectConnection)) { _ in
+      connectionManager.disconnect()
+    }
+    .task {
+      await connectionManager.loadProfiles()
     }
   }
 }

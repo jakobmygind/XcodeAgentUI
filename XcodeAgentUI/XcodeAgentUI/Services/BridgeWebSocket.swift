@@ -7,6 +7,7 @@ final class BridgeWebSocket: @unchecked Sendable {
   var messages: [BridgeEnvelope] = []
   var connectedClients: [BridgeClient] = []
   var lastError: String?
+  var activeProfile: ConnectionProfile?
 
   var onMessageReceived: (@MainActor (BridgeEnvelope) -> Void)?
   var onConnectionChanged: (@MainActor (Bool) -> Void)?
@@ -37,6 +38,42 @@ final class BridgeWebSocket: @unchecked Sendable {
     onConnectionChanged?(true)
 
     receiveMessage()
+  }
+
+  /// Connect using a ConnectionProfile with optional auth token
+  @MainActor
+  func connect(profile: ConnectionProfile, role: ClientRole = .observer, name: String = "macos-ui", token: String? = nil) {
+    disconnect()
+
+    self.activeProfile = profile
+    self.host = profile.backendHost
+    self.port = profile.backendPort
+
+    // Build WebSocket URL with auth if needed
+    guard let url = profile.wsURL(role: role, name: name, token: token) else {
+      lastError = "Invalid WebSocket URL for profile: \(profile.name)"
+      return
+    }
+
+    session = URLSession(configuration: .default)
+    webSocket = session?.webSocketTask(with: url)
+    webSocket?.resume()
+
+    isConnected = true
+    lastError = nil
+    onConnectionChanged?(true)
+
+    receiveMessage()
+  }
+
+  /// Convenience method to connect with token resolution from Keychain
+  @MainActor
+  func connect(profile: ConnectionProfile, role: ClientRole = .observer, name: String = "macos-ui", tokenResolver: ((UUID) -> String?)? = nil) {
+    var token: String?
+    if case .bearerToken = profile.authMethod {
+      token = tokenResolver?(profile.id) ?? ProfileStore.shared.loadToken(for: profile.id)
+    }
+    connect(profile: profile, role: role, name: name, token: token)
   }
 
   @MainActor

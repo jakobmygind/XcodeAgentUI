@@ -5,14 +5,28 @@ import Security
 struct KeychainManager {
   static let servicePrefix = "com.openclaw.xcode-agent-ui"
 
-  enum TokenKey: String, CaseIterable, Codable {
-    case githubToken = "github-token"
-    case gitlabToken = "gitlab-token"
-    case jiraToken = "jira-token"
-    case jiraEmail = "jira-email"
-    case shortcutToken = "shortcut-token"
-    case telegramBotToken = "telegram-bot-token"
-    case telegramChatID = "telegram-chat-id"
+  enum TokenKey: Codable, Hashable {
+    case githubToken
+    case gitlabToken
+    case jiraToken
+    case jiraEmail
+    case shortcutToken
+    case telegramBotToken
+    case telegramChatID
+    case custom(String)
+
+    var rawValue: String {
+      switch self {
+      case .githubToken: return "github-token"
+      case .gitlabToken: return "gitlab-token"
+      case .jiraToken: return "jira-token"
+      case .jiraEmail: return "jira-email"
+      case .shortcutToken: return "shortcut-token"
+      case .telegramBotToken: return "telegram-bot-token"
+      case .telegramChatID: return "telegram-chat-id"
+      case .custom(let value): return value
+      }
+    }
 
     var label: String {
       switch self {
@@ -23,6 +37,7 @@ struct KeychainManager {
       case .shortcutToken: return "API Token"
       case .telegramBotToken: return "Bot Token"
       case .telegramChatID: return "Chat ID"
+      case .custom: return "Custom Token"
       }
     }
 
@@ -35,7 +50,12 @@ struct KeychainManager {
       case .shortcutToken: return "Shortcut API token"
       case .telegramBotToken: return "123456:ABC-DEF..."
       case .telegramChatID: return "-1001234567890"
+      case .custom: return "Token"
       }
+    }
+
+    static var allCases: [TokenKey] {
+      [.githubToken, .gitlabToken, .jiraToken, .jiraEmail, .shortcutToken, .telegramBotToken, .telegramChatID]
     }
   }
 
