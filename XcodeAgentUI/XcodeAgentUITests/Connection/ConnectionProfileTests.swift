@@ -65,41 +65,49 @@ final class ConnectionProfileTests: XCTestCase {
         }
     }
     
-    func testInvalidPortThrows() {
-        XCTAssertThrowsError(try ConnectionProfile(
+    func testInvalidPortThrows() throws {
+        // Create a profile with invalid port, then validate it
+        let profile = try ConnectionProfile(
             name: "Bad Port",
             kind: .local,
             backendHost: "localhost",
             backendPort: 0
-        )) { error in
+        )
+        
+        XCTAssertThrowsError(try profile.validate()) { error in
             guard case ConnectionProfile.ValidationError.invalidPort(0) = error else {
-                XCTFail("Expected invalidPort error")
+                XCTFail("Expected invalidPort error, got \(error)")
                 return
             }
         }
         
-        XCTAssertThrowsError(try ConnectionProfile(
+        let profile2 = try ConnectionProfile(
             name: "Bad Port",
             kind: .local,
             backendHost: "localhost",
             backendPort: 70000
-        )) { error in
+        )
+        
+        XCTAssertThrowsError(try profile2.validate()) { error in
             guard case ConnectionProfile.ValidationError.invalidPort(70000) = error else {
-                XCTFail("Expected invalidPort error")
+                XCTFail("Expected invalidPort error, got \(error)")
                 return
             }
         }
     }
     
-    func testInvalidHostThrows() {
-        XCTAssertThrowsError(try ConnectionProfile(
+    func testInvalidHostThrows() throws {
+        // Create a profile with invalid host, then validate it
+        let profile = try ConnectionProfile(
             name: "Bad Host",
             kind: .custom,
             backendHost: "host with spaces",
             backendPort: 9300
-        )) { error in
+        )
+        
+        XCTAssertThrowsError(try profile.validate()) { error in
             guard case ConnectionProfile.ValidationError.invalidHost = error else {
-                XCTFail("Expected invalidHost error")
+                XCTFail("Expected invalidHost error, got \(error)")
                 return
             }
         }
@@ -175,7 +183,8 @@ final class ConnectionProfileTests: XCTestCase {
         XCTAssertEqual(profile.healthURL?.absoluteString, "http://localhost:3800/api/health")
     }
     
-    func testNilURLForInvalidHost() throws {
+    func testEmptyHostIsNotConfigured() throws {
+        // Empty host means the profile is not configured
         let profile = try ConnectionProfile(
             name: "Invalid",
             kind: .custom,
@@ -183,9 +192,10 @@ final class ConnectionProfileTests: XCTestCase {
             backendPort: 9300
         )
         
-        XCTAssertNil(profile.baseURL)
-        XCTAssertNil(profile.wsURL)
-        XCTAssertNil(profile.healthURL)
+        XCTAssertFalse(profile.isConfigured)
+        // URLs are still generated but will be invalid
+        XCTAssertNotNil(profile.baseURL)
+        XCTAssertNotNil(profile.wsURL)
     }
     
     // MARK: - Configuration Status Tests
@@ -240,28 +250,44 @@ final class ConnectionProfileTests: XCTestCase {
     
     // MARK: - Validation Tests
     
-    func testValidationReturnsErrors() throws {
-        let invalidProfile = try ConnectionProfile(
+    func testValidationThrowsForInvalidHost() throws {
+        // Create a valid profile first, then mutate it to test validation
+        var invalidProfile = try ConnectionProfile(
             name: "Invalid",
             kind: .custom,
-            backendHost: "host with spaces",
-            backendPort: 99999
+            backendHost: "localhost",
+            backendPort: 9300
         )
         
-        let errors = invalidProfile.validate()
-        XCTAssertEqual(errors.count, 2)
+        // Mutate to invalid host
+        invalidProfile.backendHost = "host with spaces"
         
-        let hasInvalidHost = errors.contains { error in
-            if case .invalidHost = error { return true }
-            return false
+        XCTAssertThrowsError(try invalidProfile.validate()) { error in
+            guard case ConnectionProfile.ValidationError.invalidHost = error else {
+                XCTFail("Expected invalidHost error, got \(error)")
+                return
+            }
         }
-        let hasInvalidPort = errors.contains { error in
-            if case .invalidPort(99999) = error { return true }
-            return false
-        }
+    }
+    
+    func testValidationThrowsForInvalidPort() throws {
+        // Create a valid profile first, then mutate it to test validation
+        var invalidProfile = try ConnectionProfile(
+            name: "Invalid",
+            kind: .custom,
+            backendHost: "localhost",
+            backendPort: 9300
+        )
         
-        XCTAssertTrue(hasInvalidHost)
-        XCTAssertTrue(hasInvalidPort)
+        // Mutate to invalid port
+        invalidProfile.backendPort = 99999
+        
+        XCTAssertThrowsError(try invalidProfile.validate()) { error in
+            guard case ConnectionProfile.ValidationError.invalidPort(99999) = error else {
+                XCTFail("Expected invalidPort error, got \(error)")
+                return
+            }
+        }
     }
     
     // MARK: - Equality Tests
@@ -278,14 +304,24 @@ final class ConnectionProfileTests: XCTestCase {
         
         let profile2 = try ConnectionProfile(
             id: id,
+            name: "Test",
+            kind: .local,
+            backendHost: "localhost",
+            backendPort: 9300
+        )
+        
+        // Profiles with same ID and all same properties should be equal
+        XCTAssertEqual(profile1, profile2)
+        
+        // Profiles with different properties should not be equal
+        let profile3 = try ConnectionProfile(
+            id: id,
             name: "Different Name",
             kind: .custom,
             backendHost: "other.host",
             backendPort: 8080
         )
-        
-        // Profiles with same ID should be equal
-        XCTAssertEqual(profile1, profile2)
+        XCTAssertNotEqual(profile1, profile3)
     }
     
     // MARK: - Coding Tests
@@ -344,9 +380,9 @@ extension ConnectionProfileTests {
 
 extension ConnectionProfileTests {
     func testAuthMethodEquality() {
-        let auth1 = AuthMethod.bearerToken(keychainRef: "ref1")
-        let auth2 = AuthMethod.bearerToken(keychainRef: "ref1")
-        let auth3 = AuthMethod.bearerToken(keychainRef: "ref2")
+        let auth1 = AuthMethod.bearerToken("ref1")
+        let auth2 = AuthMethod.bearerToken("ref1")
+        let auth3 = AuthMethod.bearerToken("ref2")
         let auth4 = AuthMethod.none
         
         XCTAssertEqual(auth1, auth2)
@@ -360,7 +396,7 @@ extension ConnectionProfileTests {
         let decoder = JSONDecoder()
         
         // Test bearer token encoding
-        let bearer = AuthMethod.bearerToken(keychainRef: "test-ref")
+        let bearer = AuthMethod.bearerToken("test-ref")
         let bearerData = try encoder.encode(bearer)
         let decodedBearer = try decoder.decode(AuthMethod.self, from: bearerData)
         XCTAssertEqual(bearer, decodedBearer)

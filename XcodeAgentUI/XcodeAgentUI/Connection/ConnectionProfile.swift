@@ -115,7 +115,9 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     /// - Returns: URL if valid, nil otherwise
     var healthURL: URL? {
         guard let base = baseURL else { return nil }
-        return base.appendingPathComponent("api/health")
+        return base
+            .appendingPathComponent("api")
+            .appendingPathComponent("health")
     }
     
     /// WebSocket URL with query parameters for connection

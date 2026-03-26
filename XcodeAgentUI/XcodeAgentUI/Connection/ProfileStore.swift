@@ -1,4 +1,5 @@
 import Foundation
+import Security
 
 /// Manages persistence of connection profiles to JSON file
 actor ProfileStore {
@@ -6,7 +7,7 @@ actor ProfileStore {
     static let shared = ProfileStore()
     
     /// URL for the profiles JSON file
-    private let fileURL: URL
+    let fileURL: URL
     
     /// In-memory cache of profiles
     private var profiles: [ConnectionProfile] = []
@@ -50,10 +51,11 @@ actor ProfileStore {
         }
         
         // Read and decode with file coordination
-        var readError: Error?
+        var coordinatorError: NSError?
         var profilesData: Data?
+        var readError: Error?
         
-        fileCoordinator.coordinate(readingItemAt: fileURL, options: .withoutChanges, error: &readError) { url in
+        fileCoordinator.coordinate(readingItemAt: fileURL, options: .withoutChanges, error: &coordinatorError) { url in
             do {
                 profilesData = try Data(contentsOf: url)
             } catch {
@@ -61,7 +63,7 @@ actor ProfileStore {
             }
         }
         
-        if let error = readError {
+        if let error = coordinatorError ?? readError {
             throw ProfileStoreError.fileReadError(fileURL, error.localizedDescription)
         }
         
@@ -70,7 +72,9 @@ actor ProfileStore {
         }
         
         do {
-            profiles = try JSONDecoder().decode([ConnectionProfile].self, from: data)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            profiles = try decoder.decode([ConnectionProfile].self, from: data)
             isInitialized = true
             return profiles
         } catch let decodingError as DecodingError {
@@ -96,20 +100,19 @@ actor ProfileStore {
         }
         
         // Write atomically using file coordination
+        var coordinatorError: NSError?
         var writeError: Error?
         
-        fileCoordinator.coordinate(writingItemAt: fileURL, options: .forReplacing, error: &writeError) { url in
+        fileCoordinator.coordinate(writingItemAt: fileURL, options: .forReplacing, error: &coordinatorError) { url in
             do {
-                // Write to temporary file first, then move atomically
-                let tempURL = url.appendingPathExtension("tmp")
-                try data.write(to: tempURL, options: .atomic)
-                try FileManager.default.moveItem(at: tempURL, to: url)
+                // Write JSON data atomically directly to the target URL
+                try data.write(to: url, options: .atomic)
             } catch {
                 writeError = error
             }
         }
         
-        if let error = writeError {
+        if let error = coordinatorError ?? writeError {
             throw ProfileStoreError.fileWriteError(fileURL, error.localizedDescription)
         }
     }
@@ -140,15 +143,21 @@ actor ProfileStore {
         
         // Check for duplicate ID
         guard !all.contains(where: { $0.id == profile.id }) else {
-            throw ConnectionError.profileNotFound(profile.id)
+            throw ConnectionError.duplicateProfileId(profile.id)
         }
         
-        // If this is set as default, unset others
-        if profile.isDefault {
+        // Determine the profile to store, adjusting default status if needed
+        var newProfile = profile
+        
+        if all.isEmpty {
+            // First profile added should always become the default
+            newProfile.isDefault = true
+        } else if profile.isDefault {
+            // Clear default from others when adding a new default profile
             all = all.map { var p = $0; p.isDefault = false; return p }
         }
         
-        all.append(profile)
+        all.append(newProfile)
         profiles = all
         try await save()
     }
@@ -205,6 +214,7 @@ actor ProfileStore {
         
         all[index].lastConnected = Date()
         all[index].lastLatencyMs = latencyMs
+        profiles = all
         try await save()
     }
     
@@ -245,22 +255,22 @@ actor ProfileStore {
 extension ProfileStore {
     /// Save bearer token for a profile in Keychain
     nonisolated func saveToken(for profileID: UUID, token: String) throws {
-        let key = KeychainManager.TokenKey.custom("openclaw-profile-\(profileID.uuidString)")
-        guard KeychainManager.save(key: key, value: token) else {
+        let key = "openclaw-profile-\(profileID.uuidString)"
+        guard saveTokenToKeychain(key: key, value: token) else {
             throw ConnectionError.keychainError("Failed to save token")
         }
     }
     
     /// Load bearer token for a profile from Keychain
     nonisolated func loadToken(for profileID: UUID) -> String? {
-        let key = KeychainManager.TokenKey.custom("openclaw-profile-\(profileID.uuidString)")
-        return KeychainManager.load(key: key)
+        let key = "openclaw-profile-\(profileID.uuidString)"
+        return loadTokenFromKeychain(key: key)
     }
     
     /// Delete bearer token for a profile
     func deleteToken(for profileID: UUID) throws {
-        let key = KeychainManager.TokenKey.custom("openclaw-profile-\(profileID.uuidString)")
-        guard KeychainManager.delete(key: key) else {
+        let key = "openclaw-profile-\(profileID.uuidString)"
+        guard deleteTokenFromKeychain(key: key) else {
             throw ConnectionError.keychainError("Failed to delete token")
         }
     }
@@ -273,4 +283,49 @@ extension ProfileStore {
         // Token is stored directly (not recommended but supported)
         return tokenRef
     }
+}
+
+// MARK: - Keychain Helpers
+
+private let serviceName = "com.openclaw.xcode-agent-ui.profiles"
+
+private func saveTokenToKeychain(key: String, value: String) -> Bool {
+    _ = deleteTokenFromKeychain(key: key)
+    
+    guard let data = value.data(using: .utf8) else { return false }
+    
+    let query: [String: Any] = [
+        kSecClass as String: kSecClassGenericPassword,
+        kSecAttrService as String: serviceName,
+        kSecAttrAccount as String: key,
+        kSecValueData as String: data,
+        kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+    ]
+    
+    return SecItemAdd(query as CFDictionary, nil) == errSecSuccess
+}
+
+private func loadTokenFromKeychain(key: String) -> String? {
+    let query: [String: Any] = [
+        kSecClass as String: kSecClassGenericPassword,
+        kSecAttrService as String: serviceName,
+        kSecAttrAccount as String: key,
+        kSecReturnData as String: true,
+        kSecMatchLimit as String: kSecMatchLimitOne,
+    ]
+    
+    var result: AnyObject?
+    let status = SecItemCopyMatching(query as CFDictionary, &result)
+    
+    guard status == errSecSuccess, let data = result as? Data else { return nil }
+    return String(data: data, encoding: .utf8)
+}
+
+private func deleteTokenFromKeychain(key: String) -> Bool {
+    let query: [String: Any] = [
+        kSecClass as String: kSecClassGenericPassword,
+        kSecAttrService as String: serviceName,
+        kSecAttrAccount as String: key,
+    ]
+    return SecItemDelete(query as CFDictionary) == errSecSuccess
 }

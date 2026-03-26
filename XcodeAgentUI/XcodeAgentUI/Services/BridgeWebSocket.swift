@@ -46,10 +46,16 @@ final class BridgeWebSocket: @unchecked Sendable {
   }
   
   /// Connect using a ConnectionProfile
+  /// - Note: Auth token is sent via Authorization header, not URL query parameter, for security
   @MainActor
   func connect(using profile: ConnectionProfile, token: String? = nil, role: ClientRole = .observer, name: String = "macos-ui") {
     guard profile.isConfigured else {
       lastError = "Profile '\(profile.name)' is not configured"
+      return
+    }
+    
+    guard let wsURL = profile.wsURL else {
+      lastError = "Profile '\(profile.name)' does not have a WebSocket URL"
       return
     }
     
@@ -60,30 +66,36 @@ final class BridgeWebSocket: @unchecked Sendable {
     host = profile.backendHost
     port = profile.backendPort
     
-    // Build WebSocket URL with auth
-    var url = profile.wsURL
-    var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+    // Build WebSocket URL with query parameters (auth via header, not URL)
+    guard var components = URLComponents(url: wsURL, resolvingAgainstBaseURL: true) else {
+      lastError = "Invalid URL components from profile"
+      return
+    }
+    
     var queryItems = [
       URLQueryItem(name: "role", value: role.rawValue),
       URLQueryItem(name: "name", value: name)
     ]
     
-    // Add auth token if provided
-    if let token = token {
-      queryItems.append(URLQueryItem(name: "token", value: token))
-    }
+    components.queryItems = queryItems
     
-    components?.queryItems = queryItems
-    
-    guard let finalURL = components?.url else {
+    guard let finalURL = components.url else {
       lastError = "Invalid URL constructed from profile"
       return
     }
     
     disconnect()
     
+    // Create URL request with auth header (more secure than query parameter)
+    var request = URLRequest(url: finalURL)
+    request.setValue("Upgrade", forHTTPHeaderField: "Connection")
+    request.setValue("websocket", forHTTPHeaderField: "Upgrade")
+    if let token = token {
+      request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+    }
+    
     session = URLSession(configuration: .default)
-    webSocket = session?.webSocketTask(with: finalURL)
+    webSocket = session?.webSocketTask(with: request)
     webSocket?.resume()
     
     isConnected = true
@@ -204,7 +216,7 @@ extension BridgeWebSocket {
   /// Quick connect to local backend
   @MainActor
   func connectToLocal(role: ClientRole = .observer, name: String = "macos-ui") {
-    let profile = ConnectionProfile.localDefault()
+    let profile = ConnectionProfile.local
     connect(using: profile, role: role, name: name)
   }
   

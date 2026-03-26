@@ -13,6 +13,7 @@ enum ConnectionError: LocalizedError, Sendable, Equatable {
     case networkUnavailable
     case discoveryFailed(String)
     case profileNotFound(UUID)
+    case duplicateProfileId(UUID)
     case keychainError(String)
     case invalidProfile(String)
     
@@ -40,6 +41,8 @@ enum ConnectionError: LocalizedError, Sendable, Equatable {
             return "Discovery failed: \(reason)"
         case .profileNotFound:
             return "Connection profile not found."
+        case .duplicateProfileId:
+            return "A profile with this ID already exists."
         case .keychainError(let reason):
             return "Keychain error: \(reason)"
         case .invalidProfile(let reason):
@@ -71,6 +74,8 @@ enum ConnectionError: LocalizedError, Sendable, Equatable {
             return "Try manual profile configuration instead."
         case .profileNotFound:
             return "Create a new connection profile."
+        case .duplicateProfileId:
+            return "Try again with a different profile."
         case .keychainError:
             return "Check Keychain access permissions."
         case .invalidProfile(let reason):
@@ -102,6 +107,8 @@ enum ConnectionError: LocalizedError, Sendable, Equatable {
         case (.discoveryFailed(let r1), .discoveryFailed(let r2)):
             return r1 == r2
         case (.profileNotFound(let id1), .profileNotFound(let id2)):
+            return id1 == id2
+        case (.duplicateProfileId(let id1), .duplicateProfileId(let id2)):
             return id1 == id2
         case (.keychainError(let r1), .keychainError(let r2)):
             return r1 == r2
