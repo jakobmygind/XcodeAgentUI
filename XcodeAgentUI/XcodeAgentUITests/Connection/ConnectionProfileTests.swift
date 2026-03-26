@@ -30,7 +30,7 @@ final class ConnectionProfileTests: XCTestCase {
             backendHost: "mac-mini.tailnet.ts.net",
             backendPort: 443,
             useTLS: true,
-            authMethod: .bearerToken(keychainRef: "test-token-ref")
+            authMethod: .bearerToken("test-token-ref")
         )
         
         XCTAssertTrue(profile.useTLS)
@@ -211,7 +211,7 @@ final class ConnectionProfileTests: XCTestCase {
     // MARK: - Default Profiles Tests
     
     func testLocalDefaultProfile() {
-        let local = ConnectionProfile.localDefault()
+        let local = ConnectionProfile.local
         
         XCTAssertEqual(local.name, "Local")
         XCTAssertEqual(local.kind, .local)
@@ -223,16 +223,16 @@ final class ConnectionProfileTests: XCTestCase {
     }
     
     func testTailscaleDefaultProfile() {
-        let tailscale = ConnectionProfile.tailscaleDefault()
+        let tailscale = ConnectionProfile.tailscale(host: "mac.tailnet.ts.net")
         
-        XCTAssertEqual(tailscale.name, "Tailscale")
+        XCTAssertEqual(tailscale.name, "Tailscale (mac.tailnet.ts.net)")
         XCTAssertEqual(tailscale.kind, .tailscale)
-        XCTAssertEqual(tailscale.backendHost, "")
+        XCTAssertEqual(tailscale.backendHost, "mac.tailnet.ts.net")
         XCTAssertFalse(tailscale.isDefault)
-        XCTAssertFalse(tailscale.isConfigured)
+        XCTAssertTrue(tailscale.isConfigured)
         
         if case .bearerToken(let ref) = tailscale.authMethod {
-            XCTAssertEqual(ref, "550E8400-E29B-41D4-A716-446655440002")
+            XCTAssertEqual(ref, "keychain-ref")
         } else {
             XCTFail("Expected bearerToken auth method")
         }
@@ -297,7 +297,7 @@ final class ConnectionProfileTests: XCTestCase {
             backendHost: "mac.tailnet.ts.net",
             backendPort: 9300,
             useTLS: true,
-            authMethod: .bearerToken(keychainRef: "my-token"),
+            authMethod: .bearerToken("my-token"),
             isDefault: true
         )
         

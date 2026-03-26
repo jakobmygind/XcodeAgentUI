@@ -43,7 +43,7 @@ actor ProfileStore {
         // Check if file exists
         guard FileManager.default.fileExists(atPath: fileURL.path) else {
             // Create default profiles on first launch
-            profiles = createDefaultProfiles()
+            profiles = [ConnectionProfile.local]
             try await save()
             isInitialized = true
             return profiles
@@ -131,7 +131,7 @@ actor ProfileStore {
     /// Get the default profile
     func defaultProfile() async throws -> ConnectionProfile? {
         let all = try await allProfiles()
-        return all.first { $0.isDefault }
+        return all.first { $0.isDefault } ?? all.first
     }
     
     /// Add a new profile
@@ -143,9 +143,8 @@ actor ProfileStore {
             throw ConnectionError.profileNotFound(profile.id)
         }
         
-        // If this is the first profile or marked as default, handle default status
-        if profile.isDefault || all.isEmpty {
-            // Clear default from others
+        // If this is set as default, unset others
+        if profile.isDefault {
             all = all.map { var p = $0; p.isDefault = false; return p }
         }
         
@@ -158,13 +157,13 @@ actor ProfileStore {
     func update(_ profile: ConnectionProfile) async throws {
         var all = try await allProfiles()
         
-        guard let index = all.firstIndex(where: { $0.id == profile.id }) else {
-            throw ConnectionError.profileNotFound(profile.id)
+        // If this is set as default, unset others
+        if profile.isDefault {
+            all = all.map { var p = $0; p.isDefault = (p.id == profile.id); return p }
         }
         
-        // Handle default status change
-        if profile.isDefault {
-            all = all.map { var p = $0; p.isDefault = false; return p }
+        guard let index = all.firstIndex(where: { $0.id == profile.id }) else {
+            throw ConnectionError.profileNotFound(profile.id)
         }
         
         all[index] = profile
@@ -172,8 +171,8 @@ actor ProfileStore {
         try await save()
     }
     
-    /// Delete a profile and its associated token
-    func delete(id: UUID) async throws {
+    /// Remove a profile and its associated token
+    func remove(id: UUID) async throws {
         var all = try await allProfiles()
         
         // Delete associated token first
@@ -197,20 +196,15 @@ actor ProfileStore {
         try await save()
     }
     
-    /// Update the last connected timestamp for a profile
-    func updateLastConnected(id: UUID, latencyMs: Int? = nil) async throws {
+    /// Update last connected timestamp and latency for a profile
+    func updateConnectionMetrics(id: UUID, latencyMs: Int?) async throws {
         var all = try await allProfiles()
-        
         guard let index = all.firstIndex(where: { $0.id == id }) else {
             throw ConnectionError.profileNotFound(id)
         }
         
         all[index].lastConnected = Date()
-        if let latency = latencyMs {
-            all[index].lastLatencyMs = latency
-        }
-        
-        profiles = all
+        all[index].lastLatencyMs = latencyMs
         try await save()
     }
     
@@ -221,7 +215,7 @@ actor ProfileStore {
             try? deleteToken(for: profile.id)
         }
         
-        profiles = createDefaultProfiles()
+        profiles = [ConnectionProfile.local]
         try await save()
     }
     
@@ -244,98 +238,39 @@ actor ProfileStore {
             throw ProfileStoreError.directoryCreationFailed(directory, error.localizedDescription)
         }
     }
-    
-    private func createDefaultProfiles() -> [ConnectionProfile] {
-        [
-            ConnectionProfile.localDefault(),
-            ConnectionProfile.tailscaleDefault()
-        ]
-    }
 }
 
 // MARK: - Profile Keychain Integration
 
 extension ProfileStore {
-    /// Service identifier for profile tokens in Keychain
-    private static let keychainService = "com.openclaw.agent-profile"
-    
-    /// Save a bearer token for a profile
-    func saveToken(for profileId: UUID, token: String) throws {
-        guard let data = token.data(using: .utf8) else {
-            throw ConnectionError.keychainError("Failed to encode token")
-        }
-        
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Self.keychainService,
-            kSecAttrAccount as String: profileId.uuidString,
-            kSecValueData as String: data,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
-        ]
-        
-        // Delete any existing token first
-        SecItemDelete(query as CFDictionary)
-        
-        let status = SecItemAdd(query as CFDictionary, nil)
-        guard status == errSecSuccess else {
-            throw ConnectionError.keychainError("Failed to save token (status: \(status))")
+    /// Save bearer token for a profile in Keychain
+    nonisolated func saveToken(for profileID: UUID, token: String) throws {
+        let key = KeychainManager.TokenKey.custom("openclaw-profile-\(profileID.uuidString)")
+        guard KeychainManager.save(key: key, value: token) else {
+            throw ConnectionError.keychainError("Failed to save token")
         }
     }
     
-    /// Load the bearer token for a profile
-    func loadToken(for profileId: UUID) throws -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Self.keychainService,
-            kSecAttrAccount as String: profileId.uuidString,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-        
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-        
-        guard status == errSecSuccess else {
-            if status == errSecItemNotFound {
-                return nil
-            }
-            throw ConnectionError.keychainError("Failed to load token (status: \(status))")
-        }
-        
-        guard let data = result as? Data,
-              let token = String(data: data, encoding: .utf8) else {
-            throw ConnectionError.keychainError("Invalid token data")
-        }
-        
-        return token
+    /// Load bearer token for a profile from Keychain
+    nonisolated func loadToken(for profileID: UUID) -> String? {
+        let key = KeychainManager.TokenKey.custom("openclaw-profile-\(profileID.uuidString)")
+        return KeychainManager.load(key: key)
     }
     
-    /// Delete the bearer token for a profile
-    func deleteToken(for profileId: UUID) throws {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Self.keychainService,
-            kSecAttrAccount as String: profileId.uuidString
-        ]
-        
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw ConnectionError.keychainError("Failed to delete token (status: \(status))")
+    /// Delete bearer token for a profile
+    func deleteToken(for profileID: UUID) throws {
+        let key = KeychainManager.TokenKey.custom("openclaw-profile-\(profileID.uuidString)")
+        guard KeychainManager.delete(key: key) else {
+            throw ConnectionError.keychainError("Failed to delete token")
         }
     }
     
-    /// Get the token for a profile's auth method
-    func resolveToken(for profile: ConnectionProfile) async throws -> String? {
-        switch profile.authMethod {
-        case .none:
-            return nil
-        case .bearerToken(let keychainRef):
-            // The keychainRef should be the profile ID for the token
-            if let uuid = UUID(uuidString: keychainRef) {
-                return try loadToken(for: uuid)
-            }
-            // Fallback to profile's own ID
-            return try loadToken(for: profile.id)
+    /// Resolve token reference to actual token
+    nonisolated func resolveToken(_ tokenRef: String, for profileID: UUID) -> String? {
+        if tokenRef == "keychain-ref" || tokenRef.hasPrefix("keychain-ref:") {
+            return loadToken(for: profileID)
         }
+        // Token is stored directly (not recommended but supported)
+        return tokenRef
     }
 }

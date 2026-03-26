@@ -1,7 +1,14 @@
 import Foundation
 
-/// Represents a connection configuration to an OpenClaw backend
+/// Represents a connection profile for connecting to an OpenClaw backend
 struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
+    /// Minimum supported protocol version for compatibility
+    static let minimumProtocolVersion = 1
+    
+    /// Default ports for different services
+    static let defaultWebSocketPort = 9300
+    static let defaultHTTPPort = 3800
+    
     let id: UUID
     var name: String
     var kind: ProfileKind
@@ -13,7 +20,7 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     var lastConnected: Date?
     var lastLatencyMs: Int?
     
-    /// Validation errors for connection profiles
+    /// Validation errors for profile configuration
     enum ValidationError: LocalizedError, Sendable {
         case emptyName
         case emptyHost
@@ -25,11 +32,11 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
             case .emptyName:
                 return "Profile name cannot be empty"
             case .emptyHost:
-                return "Backend host cannot be empty"
+                return "Host cannot be empty"
             case .invalidPort(let port):
-                return "Invalid port number: \(port). Must be between 1 and 65535."
+                return "Port \(port) is invalid. Must be 1-65535"
             case .invalidHost(let host):
-                return "Invalid host: '\(host)'. Host cannot contain spaces or special characters."
+                return "Host '\(host)' contains invalid characters"
             }
         }
     }
@@ -45,23 +52,13 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
         isDefault: Bool = false,
         lastConnected: Date? = nil,
         lastLatencyMs: Int? = nil
-    ) throws {
-        // Validate inputs
+    ) throws(ValidationError) {
+        // Validate and trim inputs
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedName.isEmpty else {
-            throw ValidationError.emptyName
-        }
-        
         let trimmedHost = backendHost.trimmingCharacters(in: .whitespacesAndNewlines)
-        // Host can be empty for unconfigured profiles (like default Tailscale)
-        if !trimmedHost.isEmpty {
-            guard Self.isValidHost(trimmedHost) else {
-                throw ValidationError.invalidHost(trimmedHost)
-            }
-        }
         
-        guard backendPort > 0 && backendPort <= 65535 else {
-            throw ValidationError.invalidPort(backendPort)
+        guard !trimmedName.isEmpty else {
+            throw .emptyName
         }
         
         self.id = id
@@ -76,15 +73,30 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
         self.lastLatencyMs = lastLatencyMs
     }
     
-    /// Validates a host string
-    private static func isValidHost(_ host: String) -> Bool {
-        // Allow localhost, IP addresses, and hostnames
-        // Reject strings with spaces or obviously invalid characters
-        let invalidCharacters = CharacterSet(charactersIn: " /\\?#[]@!$&'()*+,;=")
-        return host.rangeOfCharacter(from: invalidCharacters) == nil
+    /// Validates the profile configuration
+    func validate() throws(ValidationError) {
+        guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw .emptyName
+        }
+        
+        guard !backendHost.isEmpty else {
+            throw .emptyHost
+        }
+        
+        guard backendPort > 0 && backendPort <= 65535 else {
+            throw .invalidPort(backendPort)
+        }
+        
+        // Check for invalid characters in host
+        let invalidCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-")
+        let hostSet = CharacterSet(charactersIn: backendHost)
+        if !hostSet.isSubset(of: invalidCharacters) {
+            throw .invalidHost(backendHost)
+        }
     }
     
     /// HTTP base URL for this profile
+    /// - Returns: URL if valid, nil otherwise
     var baseURL: URL? {
         let scheme = useTLS ? "https" : "http"
         let urlString = "\(scheme)://\(backendHost):\(backendPort)"
@@ -92,6 +104,7 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     }
     
     /// WebSocket URL for this profile
+    /// - Returns: URL if valid, nil otherwise
     var wsURL: URL? {
         let scheme = useTLS ? "wss" : "ws"
         let urlString = "\(scheme)://\(backendHost):\(backendPort)"
@@ -99,9 +112,40 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     }
     
     /// Health check endpoint URL
+    /// - Returns: URL if valid, nil otherwise
     var healthURL: URL? {
         guard let base = baseURL else { return nil }
-        return base.appendingPathComponent("/api/health")
+        return base.appendingPathComponent("api/health")
+    }
+    
+    /// WebSocket URL with query parameters for connection
+    /// - Parameters:
+    ///   - role: Client role (agent, human, observer)
+    ///   - name: Client name identifier
+    ///   - token: Optional authentication token
+    /// - Returns: URL if valid, nil otherwise
+    func wsURL(role: ClientRole = .observer, name: String = "macos-ui", token: String? = nil) -> URL? {
+        guard var components = URLComponents(url: wsURL ?? URL(string: "ws://localhost:9300")!, resolvingAgainstBaseURL: true) else {
+            return nil
+        }
+        
+        var queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "role", value: role.rawValue),
+            URLQueryItem(name: "name", value: name)
+        ]
+        
+        if let token = token {
+            queryItems.append(URLQueryItem(name: "token", value: token))
+        }
+        
+        components.queryItems = queryItems
+        return components.url
+    }
+    
+    /// Returns a validated copy of this profile or throws
+    func validated() throws(ValidationError) -> ConnectionProfile {
+        try validate()
+        return self
     }
     
     /// Returns true if this profile is configured (has a valid host)
@@ -113,31 +157,9 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     var endpointDescription: String {
         "\(backendHost):\(backendPort)"
     }
-    
-    /// Validates the profile and returns any validation errors
-    func validate() -> [ValidationError] {
-        var errors: [ValidationError] = []
-        
-        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmedName.isEmpty {
-            errors.append(.emptyName)
-        }
-        
-        let trimmedHost = backendHost.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !trimmedHost.isEmpty && !Self.isValidHost(trimmedHost) {
-            errors.append(.invalidHost(trimmedHost))
-        }
-        
-        if backendPort <= 0 || backendPort > 65535 {
-            errors.append(.invalidPort(backendPort))
-        }
-        
-        return errors
-    }
 }
 
-/// The type of connection profile
-enum ProfileKind: String, Codable, CaseIterable, Sendable {
+enum ProfileKind: String, Codable, Sendable, CaseIterable {
     case local       // localhost — same machine
     case tailscale   // Tailscale IP or MagicDNS hostname
     case custom      // manual host:port (VPN, SSH tunnel, etc.)
@@ -147,6 +169,14 @@ enum ProfileKind: String, Codable, CaseIterable, Sendable {
         case .local: return "Local"
         case .tailscale: return "Tailscale"
         case .custom: return "Custom"
+        }
+    }
+    
+    var priority: Int {
+        switch self {
+        case .local: return 0
+        case .tailscale: return 1
+        case .custom: return 2
         }
     }
     
@@ -166,23 +196,25 @@ enum ProfileKind: String, Codable, CaseIterable, Sendable {
         }
     }
     
-    /// Priority for fallback ordering (lower = tried first)
-    var priority: Int {
+    /// Default timeout for this profile kind
+    var probeTimeout: TimeInterval {
         switch self {
-        case .local: return 0
-        case .tailscale: return 1
-        case .custom: return 2
+        case .local:
+            return 1.0  // Local should respond in <10ms
+        case .tailscale:
+            return 5.0  // WireGuard handshake can take 2-3s
+        case .custom:
+            return 5.0  // Unknown network conditions
         }
     }
 }
 
-/// Authentication method for a connection profile
 enum AuthMethod: Codable, Sendable, Hashable {
     case none                        // local only — no auth needed
-    case bearerToken(keychainRef: String)  // reference to Keychain entry
+    case bearerToken(String)         // pre-shared API key (stored reference, actual token in Keychain)
     
     enum CodingKeys: String, CodingKey {
-        case type, keychainRef
+        case type, token
     }
     
     enum AuthType: String, Codable, Sendable {
@@ -194,9 +226,9 @@ enum AuthMethod: Codable, Sendable, Hashable {
         switch self {
         case .none:
             try container.encode(AuthType.none, forKey: .type)
-        case .bearerToken(let ref):
+        case .bearerToken(let token):
             try container.encode(AuthType.bearerToken, forKey: .type)
-            try container.encode(ref, forKey: .keychainRef)
+            try container.encode(token, forKey: .token)
         }
     }
     
@@ -207,62 +239,73 @@ enum AuthMethod: Codable, Sendable, Hashable {
         case .none:
             self = .none
         case .bearerToken:
-            let ref = try container.decode(String.self, forKey: .keychainRef)
-            self = .bearerToken(keychainRef: ref)
+            let token = try container.decode(String.self, forKey: .token)
+            self = .bearerToken(token)
         }
     }
     
-    static func == (lhs: AuthMethod, rhs: AuthMethod) -> Bool {
-        switch (lhs, rhs) {
-        case (.none, .none):
-            return true
-        case (.bearerToken(let a), .bearerToken(let b)):
-            return a == b
-        default:
-            return false
-        }
-    }
-    
-    func hash(into hasher: inout Hasher) {
+    /// Apply auth to a URLRequest
+    /// - Parameters:
+    ///   - request: The URLRequest to modify
+    ///   - tokenResolver: Closure to resolve token references to actual tokens
+    func apply(to request: inout URLRequest, tokenResolver: (String) -> String? = { _ in nil }) {
         switch self {
         case .none:
-            hasher.combine(0)
-        case .bearerToken(let ref):
-            hasher.combine(1)
-            hasher.combine(ref)
+            break
+        case .bearerToken(let tokenRef):
+            // tokenRef is either the actual token or a keychain reference
+            let token = tokenResolver(tokenRef) ?? tokenRef
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+    }
+    
+    /// Get WebSocket URL with auth token as query parameter
+    /// - Parameters:
+    ///   - url: Base WebSocket URL
+    ///   - tokenResolver: Closure to resolve token references
+    /// - Returns: URL with auth token appended if applicable
+    func applyToWebSocket(_ url: URL, tokenResolver: (String) -> String? = { _ in nil }) -> URL {
+        switch self {
+        case .none:
+            return url
+        case .bearerToken(let tokenRef):
+            let token = tokenResolver(tokenRef) ?? tokenRef
+            guard var components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+                return url
+            }
+            var queryItems = components.queryItems ?? []
+            queryItems.append(URLQueryItem(name: "token", value: token))
+            components.queryItems = queryItems
+            return components.url ?? url
         }
     }
 }
 
-// MARK: - Default Profiles
+// MARK: - Built-in Profiles
 
 extension ConnectionProfile {
-    /// Default local profile (localhost:9300 for WebSocket)
-    static func localDefault() -> ConnectionProfile {
-        // Use try! here because we know these values are valid
-        // This is acceptable for hardcoded defaults that are tested
+    /// Default local profile
+    static var local: ConnectionProfile {
         try! ConnectionProfile(
-            id: UUID(uuidString: "550E8400-E29B-41D4-A716-446655440001")!,
             name: "Local",
             kind: .local,
             backendHost: "localhost",
-            backendPort: 9300,
+            backendPort: defaultWebSocketPort,
             useTLS: false,
             authMethod: .none,
             isDefault: true
         )
     }
     
-    /// Default Tailscale profile (empty, needs configuration)
-    static func tailscaleDefault() -> ConnectionProfile {
+    /// Template for Tailscale profile (host to be filled in)
+    static func tailscale(host: String, port: Int = defaultWebSocketPort) -> ConnectionProfile {
         try! ConnectionProfile(
-            id: UUID(uuidString: "550E8400-E29B-41D4-A716-446655440002")!,
-            name: "Tailscale",
+            name: "Tailscale (\(host))",
             kind: .tailscale,
-            backendHost: "",
-            backendPort: 9300,
+            backendHost: host,
+            backendPort: port,
             useTLS: false,
-            authMethod: .bearerToken(keychainRef: "550E8400-E29B-41D4-A716-446655440002"),
+            authMethod: .bearerToken("keychain-ref"),
             isDefault: false
         )
     }

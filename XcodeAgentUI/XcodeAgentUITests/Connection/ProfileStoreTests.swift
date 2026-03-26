@@ -23,9 +23,8 @@ actor ProfileStoreTests {
     func testLoadCreatesDefaultsWhenFileMissing() async throws {
         let profiles = try await store.load()
         
-        XCTAssertEqual(profiles.count, 2)
+        XCTAssertEqual(profiles.count, 1)
         XCTAssertTrue(profiles.contains { $0.name == "Local" })
-        XCTAssertTrue(profiles.contains { $0.name == "Tailscale" })
     }
     
     func testLoadReadsExistingFile() async throws {
@@ -45,7 +44,7 @@ actor ProfileStoreTests {
         let newStore = ProfileStore(fileURL: store.fileURL)
         let profiles = try await newStore.load()
         
-        XCTAssertEqual(profiles.count, 3)
+        XCTAssertEqual(profiles.count, 2)
         XCTAssertTrue(profiles.contains { $0.name == "Custom" })
     }
     
@@ -72,7 +71,7 @@ actor ProfileStoreTests {
         try await store.add(profile)
         let profiles = try await store.allProfiles()
         
-        XCTAssertEqual(profiles.count, 3)
+        XCTAssertEqual(profiles.count, 2)
         XCTAssertTrue(profiles.contains { $0.id == profile.id })
     }
     
@@ -208,15 +207,15 @@ actor ProfileStoreTests {
     func testSetDefault() async throws {
         _ = try await store.load()
         
-        let tailscale = try await store.profile(id: ConnectionProfile.tailscaleDefault().id)
-        XCTAssertNotNil(tailscale)
-        XCTAssertFalse(tailscale!.isDefault)
+        // Add a tailscale profile first
+        let tailscale = ConnectionProfile.tailscale(host: "test.tailnet.ts.net")
+        try await store.add(tailscale)
         
-        try await store.setDefault(id: tailscale!.id)
+        try await store.setDefault(id: tailscale.id)
         
         let profiles = try await store.allProfiles()
-        let updatedTailscale = profiles.first { $0.id == tailscale!.id }
-        let updatedLocal = profiles.first { $0.id == ConnectionProfile.localDefault().id }
+        let updatedTailscale = profiles.first { $0.id == tailscale.id }
+        let updatedLocal = profiles.first { $0.name == "Local" }
         
         XCTAssertTrue(updatedTailscale?.isDefault ?? false)
         XCTAssertFalse(updatedLocal?.isDefault ?? true)
@@ -279,7 +278,7 @@ actor ProfileStoreTests {
             authMethod: .none
         )
         
-        let token = try await store.resolveToken(for: profile)
+        let token = store.resolveToken("none", for: profile.id)
         XCTAssertNil(token)
     }
     
@@ -291,12 +290,12 @@ actor ProfileStoreTests {
             kind: .custom,
             backendHost: "host",
             backendPort: 9300,
-            authMethod: .bearerToken(keychainRef: profileId.uuidString)
+            authMethod: .bearerToken("keychain-ref")
         )
         
         try store.saveToken(for: profileId, token: "my-secret-token")
         
-        let token = try await store.resolveToken(for: profile)
+        let token = store.resolveToken("keychain-ref", for: profileId)
         XCTAssertEqual(token, "my-secret-token")
     }
     
@@ -340,9 +339,8 @@ actor ProfileStoreTests {
         try await store.resetToDefaults()
         
         let profiles = try await store.allProfiles()
-        XCTAssertEqual(profiles.count, 2)
+        XCTAssertEqual(profiles.count, 1)
         XCTAssertTrue(profiles.contains { $0.name == "Local" })
-        XCTAssertTrue(profiles.contains { $0.name == "Tailscale" })
         XCTAssertFalse(profiles.contains { $0.name == "Custom" })
     }
 }
