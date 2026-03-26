@@ -17,6 +17,12 @@ final class BridgeWebSocket: @unchecked Sendable {
 
   var host: String = "localhost"
   var port: Int = 9300
+  
+  /// The active connection profile (set when using profile-based connection)
+  private(set) var activeProfile: ConnectionProfile?
+  
+  /// Auth token for the current connection
+  private var authToken: String?
 
   @MainActor
   func connect(role: ClientRole = .observer, name: String = "macos-ui") {
@@ -38,6 +44,66 @@ final class BridgeWebSocket: @unchecked Sendable {
 
     receiveMessage()
   }
+  
+  /// Connect using a ConnectionProfile
+  @MainActor
+  func connect(using profile: ConnectionProfile, token: String? = nil, role: ClientRole = .observer, name: String = "macos-ui") {
+    guard profile.isConfigured else {
+      lastError = "Profile '\(profile.name)' is not configured"
+      return
+    }
+    
+    activeProfile = profile
+    authToken = token
+    
+    // Update legacy host/port for backward compatibility
+    host = profile.backendHost
+    port = profile.backendPort
+    
+    // Build WebSocket URL with auth
+    var url = profile.wsURL
+    var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+    var queryItems = [
+      URLQueryItem(name: "role", value: role.rawValue),
+      URLQueryItem(name: "name", value: name)
+    ]
+    
+    // Add auth token if provided
+    if let token = token {
+      queryItems.append(URLQueryItem(name: "token", value: token))
+    }
+    
+    components?.queryItems = queryItems
+    
+    guard let finalURL = components?.url else {
+      lastError = "Invalid URL constructed from profile"
+      return
+    }
+    
+    disconnect()
+    
+    session = URLSession(configuration: .default)
+    webSocket = session?.webSocketTask(with: finalURL)
+    webSocket?.resume()
+    
+    isConnected = true
+    lastError = nil
+    onConnectionChanged?(true)
+    
+    receiveMessage()
+  }
+  
+  /// Connect using ConnectionManager (recommended approach)
+  @MainActor
+  func connect(with manager: ConnectionManager, role: ClientRole = .observer, name: String = "macos-ui") async {
+    guard case .connected(let profile) = manager.state else {
+      lastError = "ConnectionManager is not in connected state"
+      return
+    }
+    
+    let token = await manager.authorizationHeader()
+    connect(using: profile, token: token, role: role, name: name)
+  }
 
   @MainActor
   func disconnect() {
@@ -45,6 +111,8 @@ final class BridgeWebSocket: @unchecked Sendable {
     webSocket = nil
     session = nil
     isConnected = false
+    activeProfile = nil
+    authToken = nil
     onConnectionChanged?(false)
   }
 
@@ -127,5 +195,31 @@ final class BridgeWebSocket: @unchecked Sendable {
 
       self.onMessageReceived?(envelope)
     }
+  }
+}
+
+// MARK: - ConnectionProfile Convenience Methods
+
+extension BridgeWebSocket {
+  /// Quick connect to local backend
+  @MainActor
+  func connectToLocal(role: ClientRole = .observer, name: String = "macos-ui") {
+    let profile = ConnectionProfile.localDefault()
+    connect(using: profile, role: role, name: name)
+  }
+  
+  /// Reconnect using the same profile
+  @MainActor
+  func reconnect() {
+    if let profile = activeProfile {
+      connect(using: profile, token: authToken)
+    } else {
+      connect()
+    }
+  }
+  
+  /// The currently active profile, if any
+  var currentProfile: ConnectionProfile? {
+    activeProfile
   }
 }
