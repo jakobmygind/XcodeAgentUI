@@ -13,6 +13,27 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     var lastConnected: Date?
     var lastLatencyMs: Int?
     
+    /// Validation errors for connection profiles
+    enum ValidationError: LocalizedError, Sendable {
+        case emptyName
+        case emptyHost
+        case invalidPort(Int)
+        case invalidHost(String)
+        
+        var errorDescription: String? {
+            switch self {
+            case .emptyName:
+                return "Profile name cannot be empty"
+            case .emptyHost:
+                return "Backend host cannot be empty"
+            case .invalidPort(let port):
+                return "Invalid port number: \(port). Must be between 1 and 65535."
+            case .invalidHost(let host):
+                return "Invalid host: '\(host)'. Host cannot contain spaces or special characters."
+            }
+        }
+    }
+    
     init(
         id: UUID = UUID(),
         name: String,
@@ -24,11 +45,29 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
         isDefault: Bool = false,
         lastConnected: Date? = nil,
         lastLatencyMs: Int? = nil
-    ) {
+    ) throws {
+        // Validate inputs
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedName.isEmpty else {
+            throw ValidationError.emptyName
+        }
+        
+        let trimmedHost = backendHost.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Host can be empty for unconfigured profiles (like default Tailscale)
+        if !trimmedHost.isEmpty {
+            guard Self.isValidHost(trimmedHost) else {
+                throw ValidationError.invalidHost(trimmedHost)
+            }
+        }
+        
+        guard backendPort > 0 && backendPort <= 65535 else {
+            throw ValidationError.invalidPort(backendPort)
+        }
+        
         self.id = id
-        self.name = name
+        self.name = trimmedName
         self.kind = kind
-        self.backendHost = backendHost
+        self.backendHost = trimmedHost
         self.backendPort = backendPort
         self.useTLS = useTLS
         self.authMethod = authMethod
@@ -37,31 +76,63 @@ struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
         self.lastLatencyMs = lastLatencyMs
     }
     
+    /// Validates a host string
+    private static func isValidHost(_ host: String) -> Bool {
+        // Allow localhost, IP addresses, and hostnames
+        // Reject strings with spaces or obviously invalid characters
+        let invalidCharacters = CharacterSet(charactersIn: " /\\?#[]@!$&'()*+,;=")
+        return host.rangeOfCharacter(from: invalidCharacters) == nil
+    }
+    
     /// HTTP base URL for this profile
-    var baseURL: URL {
+    var baseURL: URL? {
         let scheme = useTLS ? "https" : "http"
-        return URL(string: "\(scheme)://\(backendHost):\(backendPort)")!
+        let urlString = "\(scheme)://\(backendHost):\(backendPort)"
+        return URL(string: urlString)
     }
     
     /// WebSocket URL for this profile
-    var wsURL: URL {
+    var wsURL: URL? {
         let scheme = useTLS ? "wss" : "ws"
-        return URL(string: "\(scheme)://\(backendHost):\(backendPort)")!
+        let urlString = "\(scheme)://\(backendHost):\(backendPort)"
+        return URL(string: urlString)
     }
     
     /// Health check endpoint URL
-    var healthURL: URL {
-        baseURL.appendingPathComponent("/api/health")
+    var healthURL: URL? {
+        guard let base = baseURL else { return nil }
+        return base.appendingPathComponent("/api/health")
     }
     
     /// Returns true if this profile is configured (has a valid host)
     var isConfigured: Bool {
-        !backendHost.isEmpty && backendPort > 0
+        !backendHost.isEmpty && backendPort > 0 && backendPort <= 65535
     }
     
     /// Human-readable description of the connection endpoint
     var endpointDescription: String {
         "\(backendHost):\(backendPort)"
+    }
+    
+    /// Validates the profile and returns any validation errors
+    func validate() -> [ValidationError] {
+        var errors: [ValidationError] = []
+        
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedName.isEmpty {
+            errors.append(.emptyName)
+        }
+        
+        let trimmedHost = backendHost.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmedHost.isEmpty && !Self.isValidHost(trimmedHost) {
+            errors.append(.invalidHost(trimmedHost))
+        }
+        
+        if backendPort <= 0 || backendPort > 65535 {
+            errors.append(.invalidPort(backendPort))
+        }
+        
+        return errors
     }
 }
 
@@ -166,14 +237,16 @@ enum AuthMethod: Codable, Sendable, Hashable {
 // MARK: - Default Profiles
 
 extension ConnectionProfile {
-    /// Default local profile (localhost:3800 for HTTP, 9300 for WebSocket)
+    /// Default local profile (localhost:9300 for WebSocket)
     static func localDefault() -> ConnectionProfile {
-        ConnectionProfile(
-            id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
+        // Use try! here because we know these values are valid
+        // This is acceptable for hardcoded defaults that are tested
+        try! ConnectionProfile(
+            id: UUID(uuidString: "550E8400-E29B-41D4-A716-446655440001")!,
             name: "Local",
             kind: .local,
             backendHost: "localhost",
-            backendPort: 9300,  // WebSocket port
+            backendPort: 9300,
             useTLS: false,
             authMethod: .none,
             isDefault: true
@@ -182,14 +255,14 @@ extension ConnectionProfile {
     
     /// Default Tailscale profile (empty, needs configuration)
     static func tailscaleDefault() -> ConnectionProfile {
-        ConnectionProfile(
-            id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!,
+        try! ConnectionProfile(
+            id: UUID(uuidString: "550E8400-E29B-41D4-A716-446655440002")!,
             name: "Tailscale",
             kind: .tailscale,
-            backendHost: "",  // Empty - needs user configuration
+            backendHost: "",
             backendPort: 9300,
             useTLS: false,
-            authMethod: .bearerToken(keychainRef: "tailscale-default-token"),
+            authMethod: .bearerToken(keychainRef: "550E8400-E29B-41D4-A716-446655440002"),
             isDefault: false
         )
     }

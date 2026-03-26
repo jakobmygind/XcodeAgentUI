@@ -14,6 +14,9 @@ actor ProfileStore {
     /// Whether the store has been initialized with defaults
     private var isInitialized = false
     
+    /// File coordinator for atomic file operations
+    private let fileCoordinator: NSFileCoordinator
+    
     /// Initialize with custom file URL (for testing)
     init(fileURL: URL? = nil) {
         if let fileURL = fileURL {
@@ -22,6 +25,7 @@ actor ProfileStore {
             let home = FileManager.default.homeDirectoryForCurrentUser
             self.fileURL = home.appendingPathComponent(".openclaw/profiles.json")
         }
+        self.fileCoordinator = NSFileCoordinator(filePresenter: nil)
     }
     
     // MARK: - Public API
@@ -45,9 +49,27 @@ actor ProfileStore {
             return profiles
         }
         
-        // Read and decode
+        // Read and decode with file coordination
+        var readError: Error?
+        var profilesData: Data?
+        
+        fileCoordinator.coordinate(readingItemAt: fileURL, options: .withoutChanges, error: &readError) { url in
+            do {
+                profilesData = try Data(contentsOf: url)
+            } catch {
+                readError = error
+            }
+        }
+        
+        if let error = readError {
+            throw ProfileStoreError.fileReadError(fileURL, error.localizedDescription)
+        }
+        
+        guard let data = profilesData else {
+            throw ProfileStoreError.fileReadError(fileURL, "No data read")
+        }
+        
         do {
-            let data = try Data(contentsOf: fileURL)
             profiles = try JSONDecoder().decode([ConnectionProfile].self, from: data)
             isInitialized = true
             return profiles
@@ -58,17 +80,36 @@ actor ProfileStore {
         }
     }
     
-    /// Save current profiles to disk
+    /// Save current profiles to disk atomically
     func save() async throws {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.dateEncodingStrategy = .iso8601
+        
+        let data: Data
         do {
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-            encoder.dateEncodingStrategy = .iso8601
-            let data = try encoder.encode(profiles)
-            try data.write(to: fileURL, options: .atomic)
+            data = try encoder.encode(profiles)
         } catch let encodingError as EncodingError {
             throw ProfileStoreError.encodingError(encodingError.localizedDescription)
         } catch {
+            throw ProfileStoreError.encodingError(error.localizedDescription)
+        }
+        
+        // Write atomically using file coordination
+        var writeError: Error?
+        
+        fileCoordinator.coordinate(writingItemAt: fileURL, options: .forReplacing, error: &writeError) { url in
+            do {
+                // Write to temporary file first, then move atomically
+                let tempURL = url.appendingPathExtension("tmp")
+                try data.write(to: tempURL, options: .atomic)
+                try FileManager.default.moveItem(at: tempURL, to: url)
+            } catch {
+                writeError = error
+            }
+        }
+        
+        if let error = writeError {
             throw ProfileStoreError.fileWriteError(fileURL, error.localizedDescription)
         }
     }
@@ -96,6 +137,11 @@ actor ProfileStore {
     /// Add a new profile
     func add(_ profile: ConnectionProfile) async throws {
         var all = try await allProfiles()
+        
+        // Check for duplicate ID
+        guard !all.contains(where: { $0.id == profile.id }) else {
+            throw ConnectionError.profileNotFound(profile.id)
+        }
         
         // If this is the first profile or marked as default, handle default status
         if profile.isDefault || all.isEmpty {
@@ -126,9 +172,13 @@ actor ProfileStore {
         try await save()
     }
     
-    /// Delete a profile
+    /// Delete a profile and its associated token
     func delete(id: UUID) async throws {
         var all = try await allProfiles()
+        
+        // Delete associated token first
+        try? deleteToken(for: id)
+        
         all.removeAll { $0.id == id }
         profiles = all
         try await save()
@@ -166,6 +216,11 @@ actor ProfileStore {
     
     /// Reset to default profiles (useful for testing or recovery)
     func resetToDefaults() async throws {
+        // Delete all tokens first
+        for profile in profiles {
+            try? deleteToken(for: profile.id)
+        }
+        
         profiles = createDefaultProfiles()
         try await save()
     }
@@ -183,7 +238,7 @@ actor ProfileStore {
             try FileManager.default.createDirectory(
                 at: directory,
                 withIntermediateDirectories: true,
-                attributes: nil
+                attributes: [.posixPermissions: 0o700] // Restrictive permissions
             )
         } catch {
             throw ProfileStoreError.directoryCreationFailed(directory, error.localizedDescription)
@@ -206,11 +261,15 @@ extension ProfileStore {
     
     /// Save a bearer token for a profile
     func saveToken(for profileId: UUID, token: String) throws {
+        guard let data = token.data(using: .utf8) else {
+            throw ConnectionError.keychainError("Failed to encode token")
+        }
+        
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: Self.keychainService,
             kSecAttrAccount as String: profileId.uuidString,
-            kSecValueData as String: token.data(using: .utf8)!,
+            kSecValueData as String: data,
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         ]
         
@@ -271,10 +330,11 @@ extension ProfileStore {
         case .none:
             return nil
         case .bearerToken(let keychainRef):
-            // If keychainRef is a UUID, use it directly; otherwise use profile ID
+            // The keychainRef should be the profile ID for the token
             if let uuid = UUID(uuidString: keychainRef) {
                 return try loadToken(for: uuid)
             }
+            // Fallback to profile's own ID
             return try loadToken(for: profile.id)
         }
     }

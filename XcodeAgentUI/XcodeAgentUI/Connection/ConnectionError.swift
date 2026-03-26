@@ -2,10 +2,10 @@ import Foundation
 
 /// Errors that can occur during connection operations
 enum ConnectionError: LocalizedError, Sendable {
-    case healthCheckFailed(URL, Int)
-    case healthCheckTimeout(URL, TimeInterval)
-    case webSocketUpgradeFailed(URL, String)
-    case authenticationFailed(URL)
+    case healthCheckFailed(URL?, Int)
+    case healthCheckTimeout(URL?, TimeInterval)
+    case webSocketUpgradeFailed(URL?, String)
+    case authenticationFailed(URL?)
     case allProfilesFailed
     case backendVersionMismatch(backend: String, required: Int)
     case tailscaleNotRunning
@@ -19,16 +19,20 @@ enum ConnectionError: LocalizedError, Sendable {
     var errorDescription: String? {
         switch self {
         case .healthCheckFailed(let url, let status):
-            return "Backend at \(url.host ?? "unknown") returned status \(status). Check that the agent service is running."
+            let host = url?.host ?? "unknown"
+            return "Backend at \(host) returned status \(status). Check that the agent service is running."
             
         case .healthCheckTimeout(let url, let timeout):
-            return "Connection to \(url.host ?? "unknown") timed out after \(String(format: "%.1f", timeout))s. The backend may be on a different network."
+            let host = url?.host ?? "unknown"
+            return "Connection to \(host) timed out after \(String(format: "%.1f", timeout))s. The backend may be on a different network."
             
         case .webSocketUpgradeFailed(let url, let reason):
-            return "Connected to \(url.host ?? "unknown") but real-time feed failed: \(reason). Falling back to polling."
+            let host = url?.host ?? "unknown"
+            return "Connected to \(host) but real-time feed failed: \(reason). Falling back to polling."
             
         case .authenticationFailed(let url):
-            return "Authentication failed for \(url.host ?? "unknown"). Check your API token in profile settings."
+            let host = url?.host ?? "unknown"
+            return "Authentication failed for \(host). Check your API token in profile settings."
             
         case .allProfilesFailed:
             return "Could not connect to any configured backend."
@@ -98,6 +102,40 @@ enum ConnectionError: LocalizedError, Sendable {
         case .authenticationFailed, .backendVersionMismatch, .invalidProfile,
              .keychainError, .profileNotFound, .noDefaultProfile, .allProfilesFailed,
              .tailscaleNotRunning, .decodingError:
+            return false
+        }
+    }
+    
+    /// Compare two errors for equality based on their type and key properties
+    func isEqual(to other: ConnectionError) -> Bool {
+        switch (self, other) {
+        case (.healthCheckFailed(let u1, let s1), .healthCheckFailed(let u2, let s2)):
+            return u1 == u2 && s1 == s2
+        case (.healthCheckTimeout(let u1, let t1), .healthCheckTimeout(let u2, let t2)):
+            return u1 == u2 && t1 == t2
+        case (.webSocketUpgradeFailed(let u1, let r1), .webSocketUpgradeFailed(let u2, let r2)):
+            return u1 == u2 && r1 == r2
+        case (.authenticationFailed(let u1), .authenticationFailed(let u2)):
+            return u1 == u2
+        case (.allProfilesFailed, .allProfilesFailed):
+            return true
+        case (.backendVersionMismatch(let v1, let r1), .backendVersionMismatch(let v2, let r2)):
+            return v1 == v2 && r1 == r2
+        case (.tailscaleNotRunning, .tailscaleNotRunning):
+            return true
+        case (.invalidProfile(let p1), .invalidProfile(let p2)):
+            return p1.id == p2.id
+        case (.keychainError(let d1), .keychainError(let d2)):
+            return d1 == d2
+        case (.profileNotFound(let id1), .profileNotFound(let id2)):
+            return id1 == id2
+        case (.noDefaultProfile, .noDefaultProfile):
+            return true
+        case (.networkUnavailable, .networkUnavailable):
+            return true
+        case (.decodingError(let d1), .decodingError(let d2)):
+            return d1 == d2
+        default:
             return false
         }
     }
