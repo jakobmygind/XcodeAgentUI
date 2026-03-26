@@ -3,7 +3,7 @@ import Foundation
 import Observation
 
 @Observable @MainActor
-final class ProviderStore: @unchecked Sendable {
+final class ProviderStore {
   var providers: [Provider] = []
 
   @ObservationIgnored @Dependency(\.keychainClient) var keychainClient

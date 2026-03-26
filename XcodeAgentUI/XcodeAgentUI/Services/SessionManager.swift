@@ -5,7 +5,7 @@ import Observation
 import UserNotifications
 
 @Observable @MainActor
-final class SessionManager: @unchecked Sendable {
+final class SessionManager {
   var activeSession: AgentSession?
   var isConnectedAsHuman: Bool = false
 

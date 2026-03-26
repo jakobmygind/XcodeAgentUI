@@ -2,7 +2,7 @@ import Foundation
 import Observation
 
 @Observable @MainActor
-final class WorkloadBalancer: @unchecked Sendable {
+final class WorkloadBalancer {
 
   // MARK: - State
 

@@ -3,7 +3,7 @@ import Observation
 import SQLite3
 
 @Observable @MainActor
-final class MetricsStore: @unchecked Sendable {
+final class MetricsStore {
   var runs: [TicketRun] = []
   var agentStats: [AgentStats] = []
   var dailyMetrics: [DailyMetric] = []

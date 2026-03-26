@@ -81,7 +81,7 @@ final class NotificationManager: NSObject, UNUserNotificationCenterDelegate, @un
   }
 
   func requestAuthorization() {
-    Task {
+    Task { @MainActor in
       let granted = try? await UNUserNotificationCenter.current().requestAuthorization(
         options: [.alert, .sound, .badge])
       self.isAuthorized = granted ?? false

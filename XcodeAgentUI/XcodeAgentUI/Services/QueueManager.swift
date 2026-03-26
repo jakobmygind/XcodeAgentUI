@@ -3,7 +3,7 @@ import Observation
 import SwiftUI
 
 @Observable @MainActor
-final class QueueManager: @unchecked Sendable {
+final class QueueManager {
   var tickets: [QueueTicket] = []
   var concurrencyLimits: ConcurrencyLimits = .default {
     didSet { saveLimits(); processQueue() }

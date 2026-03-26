@@ -2,7 +2,7 @@ import Foundation
 import Observation
 
 @Observable @MainActor
-class AgentService: @unchecked Sendable {
+class AgentService {
   var routerStatus = ServiceStatus(
     id: "router", name: "Router", state: .stopped, port: 3800)
   var bridgeStatus = ServiceStatus(
