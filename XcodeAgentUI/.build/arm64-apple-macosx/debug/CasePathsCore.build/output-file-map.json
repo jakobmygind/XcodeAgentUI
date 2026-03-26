@@ -1,0 +1,75 @@
+{
+  "": {
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/primary.swiftdeps"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/AnyCasePath.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/AnyCasePath.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/AnyCasePath.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/AnyCasePath~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/AnyCasePath.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/AnyCasePath.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/CasePathIterable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathIterable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathIterable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathIterable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathIterable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathIterable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/CasePathReflectable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathReflectable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathReflectable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathReflectable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathReflectable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathReflectable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/CasePathable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/CasePathable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/Internal/KeyPath+Sendable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/KeyPath+Sendable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/KeyPath+Sendable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/KeyPath+Sendable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/KeyPath+Sendable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/KeyPath+Sendable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/Internal/TypeName.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/TypeName.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/TypeName.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/TypeName~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/TypeName.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/TypeName.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/Internal/UncheckedSendable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/UncheckedSendable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/UncheckedSendable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/UncheckedSendable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/UncheckedSendable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/UncheckedSendable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/Never+CasePathable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Never+CasePathable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Never+CasePathable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Never+CasePathable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Never+CasePathable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Never+CasePathable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/Optional+CasePathable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Optional+CasePathable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Optional+CasePathable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Optional+CasePathable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Optional+CasePathable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Optional+CasePathable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-case-paths/Sources/CasePathsCore/Result+CasePathable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Result+CasePathable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Result+CasePathable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Result+CasePathable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Result+CasePathable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/CasePathsCore.build/Result+CasePathable.dia"
+  }
+}

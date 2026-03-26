@@ -1,0 +1,3 @@
+module IssueReportingPackageSupport {
+    header "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/IssueReportingPackageSupport.build/include/IssueReportingPackageSupport-Swift.h"
+}

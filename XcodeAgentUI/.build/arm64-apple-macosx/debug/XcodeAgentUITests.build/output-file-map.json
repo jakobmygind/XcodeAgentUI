@@ -1,0 +1,40 @@
+{
+  "": {
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/primary.swiftdeps"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/XcodeAgentUITests/AgentServiceTests.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/AgentServiceTests.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/AgentServiceTests.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/AgentServiceTests~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/AgentServiceTests.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/AgentServiceTests.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/XcodeAgentUITests/ProviderStoreTests.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/ProviderStoreTests.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/ProviderStoreTests.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/ProviderStoreTests~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/ProviderStoreTests.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/ProviderStoreTests.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/XcodeAgentUITests/QueueManagerTests.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/QueueManagerTests.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/QueueManagerTests.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/QueueManagerTests~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/QueueManagerTests.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/QueueManagerTests.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/XcodeAgentUITests/SessionManagerTests.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/SessionManagerTests.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/SessionManagerTests.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/SessionManagerTests~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/SessionManagerTests.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/SessionManagerTests.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/XcodeAgentUITests/WorkloadBalancerTests.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/WorkloadBalancerTests.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/WorkloadBalancerTests.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/WorkloadBalancerTests~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/WorkloadBalancerTests.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/XcodeAgentUITests.build/WorkloadBalancerTests.dia"
+  }
+}

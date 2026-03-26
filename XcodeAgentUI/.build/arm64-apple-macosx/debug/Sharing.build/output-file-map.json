@@ -1,0 +1,166 @@
+{
+  "": {
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/primary.swiftdeps"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/Deprecations.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Deprecations.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Deprecations.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Deprecations~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Deprecations.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Deprecations.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/KeyPath+Sendable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/KeyPath+Sendable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/KeyPath+Sendable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/KeyPath+Sendable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/KeyPath+Sendable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/KeyPath+Sendable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/MutexBackport.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/MutexBackport.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/MutexBackport.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/MutexBackport~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/MutexBackport.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/MutexBackport.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/NSRecursiveLock+WithLock.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/NSRecursiveLock+WithLock.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/NSRecursiveLock+WithLock.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/NSRecursiveLock+WithLock~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/NSRecursiveLock+WithLock.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/NSRecursiveLock+WithLock.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/PassthroughRelay.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PassthroughRelay.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PassthroughRelay.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PassthroughRelay~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PassthroughRelay.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PassthroughRelay.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/PersistentReferences.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PersistentReferences.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PersistentReferences.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PersistentReferences~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PersistentReferences.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/PersistentReferences.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/Reference.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Reference.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Reference.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Reference~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Reference.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Reference.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/SharedChangeTracker.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedChangeTracker.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedChangeTracker.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedChangeTracker~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedChangeTracker.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedChangeTracker.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Internal/TypeName.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/TypeName.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/TypeName.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/TypeName~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/TypeName.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/TypeName.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/Shared.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Shared.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Shared.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Shared~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Shared.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/Shared.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedBinding.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedBinding.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedBinding.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedBinding~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedBinding.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedBinding.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedCollection.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedCollection.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedCollection.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedCollection~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedCollection.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedCollection.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedContinuations.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedContinuations.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedContinuations.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedContinuations~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedContinuations.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedContinuations.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedKey.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedKey.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedKey.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedKey~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedKey.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedKey.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedKeys/AppStorageKey.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/AppStorageKey.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/AppStorageKey.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/AppStorageKey~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/AppStorageKey.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/AppStorageKey.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedKeys/DefaultKey.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/DefaultKey.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/DefaultKey.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/DefaultKey~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/DefaultKey.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/DefaultKey.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedKeys/FileStorageKey.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/FileStorageKey.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/FileStorageKey.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/FileStorageKey~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/FileStorageKey.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/FileStorageKey.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedKeys/InMemoryKey.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/InMemoryKey.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/InMemoryKey.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/InMemoryKey~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/InMemoryKey.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/InMemoryKey.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedPublisher.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedPublisher.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedPublisher.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedPublisher~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedPublisher.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedPublisher.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedReader.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReader.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReader.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReader~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReader.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReader.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SharedReaderKey.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReaderKey.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReaderKey.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReaderKey~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReaderKey.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SharedReaderKey.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-sharing/Sources/Sharing/SwiftUIStateSharing.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SwiftUIStateSharing.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SwiftUIStateSharing.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SwiftUIStateSharing~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SwiftUIStateSharing.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/SwiftUIStateSharing.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/DerivedSources/resource_bundle_accessor.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/resource_bundle_accessor.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/resource_bundle_accessor.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/resource_bundle_accessor~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/resource_bundle_accessor.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Sharing.build/resource_bundle_accessor.dia"
+  }
+}

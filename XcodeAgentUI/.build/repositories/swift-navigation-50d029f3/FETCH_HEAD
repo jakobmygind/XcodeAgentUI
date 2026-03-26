@@ -1,0 +1,287 @@
+7e12601412b67971a6f2c4bc72dd9c45dc55224b	not-for-merge	branch 'eager-navigation-destination-resolution' of https://github.com/pointfreeco/swift-navigation
+3d911e7f7381047f4afedc2e47735ec8546192ad	not-for-merge	branch 'failing-test-cases' of https://github.com/pointfreeco/swift-navigation
+634bef0dd54234c77c51713155373dc8d035d00f	not-for-merge	branch 'fix-ci' of https://github.com/pointfreeco/swift-navigation
+1fd75f7f1542aa01c825335392f41c2755bd4fed	not-for-merge	branch 'fix-interactive-pop' of https://github.com/pointfreeco/swift-navigation
+43c32dfe388184c9731e6e3e903c48aecb06bde1	not-for-merge	branch 'fixes' of https://github.com/pointfreeco/swift-navigation
+2e52d18b6e0e57505ae1f60a6df4e8b95dc1ef08	not-for-merge	branch 'gh-pages' of https://github.com/pointfreeco/swift-navigation
+e7441dc4dfec6a4ae929e614e3c1e67c6639d164	not-for-merge	branch 'main' of https://github.com/pointfreeco/swift-navigation
+bcf315015637e3ee28e612aed51085eb61901f77	not-for-merge	branch 'nav-link-fix' of https://github.com/pointfreeco/swift-navigation
+bbdcf3f65ecf609517411eb768a43db22bac09d6	not-for-merge	branch 'nav-link-polyfill' of https://github.com/pointfreeco/swift-navigation
+559f239e0964a58eeedcd840315d82c0c440080f	not-for-merge	branch 'nav-stack' of https://github.com/pointfreeco/swift-navigation
+f6e46548740c8e4764560493e13a56288388632b	not-for-merge	branch 'nav-stack-bugs' of https://github.com/pointfreeco/swift-navigation
+db80ac5793098770012dd740079dd3f56bc7e1d3	not-for-merge	branch 'relax-sendable' of https://github.com/pointfreeco/swift-navigation
+30b51c640845025fd4a01d2b2907dc87cc9ae715	not-for-merge	branch 'scoped-import' of https://github.com/pointfreeco/swift-navigation
+3e85443c62aa395dd01011d226c9dcd45d057a58	not-for-merge	branch 'stacks' of https://github.com/pointfreeco/swift-navigation
+b42e4dbaea8cfba905f27b53169885ce3f0c4ac3	not-for-merge	branch 'text-field-state' of https://github.com/pointfreeco/swift-navigation
+a3f715a9fae65549136f0070840b7f3eccc0efa7	not-for-merge	branch 'uikit-isolation' of https://github.com/pointfreeco/swift-navigation
+6e6590c5a064ba73749517211f09df6457fcc4d9	not-for-merge	branch 'uikit-navigation-beta' of https://github.com/pointfreeco/swift-navigation
+1dce9e4e7c4be39b4c46c0b766d1ed9d986c97d9	not-for-merge	branch 'unnest-button-role' of https://github.com/pointfreeco/swift-navigation
+01a044d03c6a0f8fbf565500091b303ca3b29775	not-for-merge	'refs/pull/105/head' of https://github.com/pointfreeco/swift-navigation
+eb0e0179997abdabbe457906c41925f7acec55cd	not-for-merge	'refs/pull/11/head' of https://github.com/pointfreeco/swift-navigation
+395bb2d386478a6179028f8e08c6dd56b3621294	not-for-merge	'refs/pull/110/head' of https://github.com/pointfreeco/swift-navigation
+38bccb1d003d35c36280daa27f47095a62c38439	not-for-merge	'refs/pull/112/head' of https://github.com/pointfreeco/swift-navigation
+29ba4461908262dac3f023ac538f1a302a1f01e8	not-for-merge	'refs/pull/113/head' of https://github.com/pointfreeco/swift-navigation
+1d36237ef43f9c96a7cf56295349b36594291842	not-for-merge	'refs/pull/115/head' of https://github.com/pointfreeco/swift-navigation
+8f598f2329a82453438d19dd626b777a52dc1452	not-for-merge	'refs/pull/116/head' of https://github.com/pointfreeco/swift-navigation
+ba06d2ef758660f6d412828a8c6f76a608614e3d	not-for-merge	'refs/pull/120/head' of https://github.com/pointfreeco/swift-navigation
+c7887f02660597a28b92534c7d74fca27b171cc1	not-for-merge	'refs/pull/122/head' of https://github.com/pointfreeco/swift-navigation
+f7a8c5653149dc430dac1d753f665bb0de6915f2	not-for-merge	'refs/pull/123/head' of https://github.com/pointfreeco/swift-navigation
+2e651875e8169c59117cba41d45ac96d4678602f	not-for-merge	'refs/pull/125/head' of https://github.com/pointfreeco/swift-navigation
+057d3ea14c4288f78088cbd22fc33e3dc2e65562	not-for-merge	'refs/pull/127/head' of https://github.com/pointfreeco/swift-navigation
+5b9ad3acea691f05eeff156ce12d6ee0afcb96eb	not-for-merge	'refs/pull/130/head' of https://github.com/pointfreeco/swift-navigation
+a9e5feb74ca936c7cc59dc6852fe28b15c26039f	not-for-merge	'refs/pull/131/head' of https://github.com/pointfreeco/swift-navigation
+5de17a094f44e2f2d01c9e85943bc474b65d9933	not-for-merge	'refs/pull/132/head' of https://github.com/pointfreeco/swift-navigation
+238a7d252691abfd2b78b2ed3339355158ee9444	not-for-merge	'refs/pull/133/head' of https://github.com/pointfreeco/swift-navigation
+64ada77b26faf452b62cce9a1451385476dc4e61	not-for-merge	'refs/pull/134/head' of https://github.com/pointfreeco/swift-navigation
+0249c16b572bd8ac6f53b516bef18ebdfc1f30c0	not-for-merge	'refs/pull/135/head' of https://github.com/pointfreeco/swift-navigation
+588ec187a4431456de25d3cc1599f03193a851f1	not-for-merge	'refs/pull/136/head' of https://github.com/pointfreeco/swift-navigation
+0e20aa9f3975d7088e7d4c27dd36d20022c17e59	not-for-merge	'refs/pull/137/head' of https://github.com/pointfreeco/swift-navigation
+ed15d43154ee72ae7c20b20887382bb4cefb204e	not-for-merge	'refs/pull/141/head' of https://github.com/pointfreeco/swift-navigation
+5034a4fe8a814843668e1eaf4fb78eb53fde773d	not-for-merge	'refs/pull/145/head' of https://github.com/pointfreeco/swift-navigation
+2d89b5bf931cdf69a58f09c7627e4fee305149f9	not-for-merge	'refs/pull/148/head' of https://github.com/pointfreeco/swift-navigation
+0a28841f66faa04742139cb9ae7c980da39ca158	not-for-merge	'refs/pull/149/head' of https://github.com/pointfreeco/swift-navigation
+634bef0dd54234c77c51713155373dc8d035d00f	not-for-merge	'refs/pull/152/head' of https://github.com/pointfreeco/swift-navigation
+8508eade30c83f63f9a6366f41a3d6a9fbc0c55a	not-for-merge	'refs/pull/153/head' of https://github.com/pointfreeco/swift-navigation
+5357ee97262934cc35eebd2b50e089807cb012bd	not-for-merge	'refs/pull/155/head' of https://github.com/pointfreeco/swift-navigation
+b093b2e6ac4b8c265d7d167517fe42a15744474d	not-for-merge	'refs/pull/156/head' of https://github.com/pointfreeco/swift-navigation
+0712f104753bc2ce92b752d43407d7ee6a456bbd	not-for-merge	'refs/pull/157/head' of https://github.com/pointfreeco/swift-navigation
+22f2a11b54013dfb0d73ae6f8b28cbf935bba713	not-for-merge	'refs/pull/158/head' of https://github.com/pointfreeco/swift-navigation
+1a0dc4496173636cf4360706d3804a163d777cbe	not-for-merge	'refs/pull/159/head' of https://github.com/pointfreeco/swift-navigation
+dd10b706c0cf66035f1e235eff58bedac6cac1f5	not-for-merge	'refs/pull/16/head' of https://github.com/pointfreeco/swift-navigation
+b849576c5508bd4d0430d445654514e95ed48e7b	not-for-merge	'refs/pull/160/head' of https://github.com/pointfreeco/swift-navigation
+e104ffbdba71f77c1bd5bd5e2dae5aa4406ce1e7	not-for-merge	'refs/pull/162/head' of https://github.com/pointfreeco/swift-navigation
+7f69ebf96a19de2fdf796dd57e7ead9254a4ba1c	not-for-merge	'refs/pull/163/head' of https://github.com/pointfreeco/swift-navigation
+9467baa17900811777db1c982411fe4d07956899	not-for-merge	'refs/pull/165/head' of https://github.com/pointfreeco/swift-navigation
+44af0516d22dee15bb7b19f31e1925203629b355	not-for-merge	'refs/pull/166/head' of https://github.com/pointfreeco/swift-navigation
+6e6590c5a064ba73749517211f09df6457fcc4d9	not-for-merge	'refs/pull/167/head' of https://github.com/pointfreeco/swift-navigation
+0a58a6a8d30be73a7b156f2df18214dee0f97fa4	not-for-merge	'refs/pull/171/head' of https://github.com/pointfreeco/swift-navigation
+743d82ab8591dfd992785f7f47604ae0bf771b4e	not-for-merge	'refs/pull/176/head' of https://github.com/pointfreeco/swift-navigation
+1c0b8671ea0f6225b17ac5a7db8a135ed6f49b58	not-for-merge	'refs/pull/179/head' of https://github.com/pointfreeco/swift-navigation
+1f2d8819dd81d38b8797008e4acd80d6fc800f75	not-for-merge	'refs/pull/18/head' of https://github.com/pointfreeco/swift-navigation
+30660bc48ac9267177d4ad1f438da9fed0f5d09c	not-for-merge	'refs/pull/180/head' of https://github.com/pointfreeco/swift-navigation
+c7b574b583958cdd008e37d3042436d7a67dfdc3	not-for-merge	'refs/pull/181/head' of https://github.com/pointfreeco/swift-navigation
+27e1dc8a5c1dcf33894781bb066d9776ca4b844e	not-for-merge	'refs/pull/183/head' of https://github.com/pointfreeco/swift-navigation
+784c6f814a89465626649857e32c519bc801874e	not-for-merge	'refs/pull/185/head' of https://github.com/pointfreeco/swift-navigation
+d8b8d2518c94e797a0129eabd79851b057a6db0d	not-for-merge	'refs/pull/186/head' of https://github.com/pointfreeco/swift-navigation
+ca31c81f1b1dcf28f147fe15c8ca21921270c57a	not-for-merge	'refs/pull/187/head' of https://github.com/pointfreeco/swift-navigation
+7461e0fb93884d40b91c813239bbd738ea265e21	not-for-merge	'refs/pull/188/head' of https://github.com/pointfreeco/swift-navigation
+f4426724adeec501b0311e036d4d91d674519dda	not-for-merge	'refs/pull/190/head' of https://github.com/pointfreeco/swift-navigation
+1edb484f86d086130dcd1b6a0f012070f5514569	not-for-merge	'refs/pull/191/head' of https://github.com/pointfreeco/swift-navigation
+0523eaac6d256f122650f63e166142374a6bdac5	not-for-merge	'refs/pull/192/head' of https://github.com/pointfreeco/swift-navigation
+d2e3e5e1397dd9ac129beec05421052a151ce1dd	not-for-merge	'refs/pull/194/head' of https://github.com/pointfreeco/swift-navigation
+ccd3fcafc41a1a12ad304a79a39cfbcdd39eecfb	not-for-merge	'refs/pull/195/head' of https://github.com/pointfreeco/swift-navigation
+045c3535ed01a3ec8ce2f6a40abb42e8a6d7b643	not-for-merge	'refs/pull/196/head' of https://github.com/pointfreeco/swift-navigation
+4306f7a954172b8ad2bc55c73c3682404052bcb3	not-for-merge	'refs/pull/197/head' of https://github.com/pointfreeco/swift-navigation
+071b071b69497b12bd93592a83218368d350299e	not-for-merge	'refs/pull/198/head' of https://github.com/pointfreeco/swift-navigation
+7339e25cdc2c5b29285705abb5fd10965fd4a284	not-for-merge	'refs/pull/199/head' of https://github.com/pointfreeco/swift-navigation
+9ef60ecf9734703fc5560936a2a597247c734e22	not-for-merge	'refs/pull/20/head' of https://github.com/pointfreeco/swift-navigation
+c1f2b2ac65627503a9e35bc64a19d4c0f1bd1c1e	not-for-merge	'refs/pull/200/head' of https://github.com/pointfreeco/swift-navigation
+c468a965180e291b36f5f63feabfec1204d64d6c	not-for-merge	'refs/pull/200/merge' of https://github.com/pointfreeco/swift-navigation
+3c50c32396a765ae36279ebddc07170cc9fb7b05	not-for-merge	'refs/pull/201/head' of https://github.com/pointfreeco/swift-navigation
+d5890442f447c555da5109ad058ecc64eaa5a405	not-for-merge	'refs/pull/202/head' of https://github.com/pointfreeco/swift-navigation
+c082395dea94f2bb3a44af934ce8c1ba8fa16ee3	not-for-merge	'refs/pull/203/head' of https://github.com/pointfreeco/swift-navigation
+c5470c78568b23f63f558104f803aa7ef3003f58	not-for-merge	'refs/pull/207/head' of https://github.com/pointfreeco/swift-navigation
+42560d8c7e0c529b1d66906365caf2248ee3f2f3	not-for-merge	'refs/pull/208/head' of https://github.com/pointfreeco/swift-navigation
+00ed18a322665a08ca85a47955d23e841a840022	not-for-merge	'refs/pull/209/head' of https://github.com/pointfreeco/swift-navigation
+1b0694a9984a940827f50083326bd706774319e4	not-for-merge	'refs/pull/210/head' of https://github.com/pointfreeco/swift-navigation
+0d7c829cf3584e5b080e728fc8ab89070a26ac9c	not-for-merge	'refs/pull/211/head' of https://github.com/pointfreeco/swift-navigation
+c9081d36fd31570e04ae93145f080b701695b2a5	not-for-merge	'refs/pull/212/head' of https://github.com/pointfreeco/swift-navigation
+863c8d2d6c37462a012b78ad654fc6c6c9d274c5	not-for-merge	'refs/pull/213/head' of https://github.com/pointfreeco/swift-navigation
+f3db77a5309e13cfae004b867ffd9c84a989846c	not-for-merge	'refs/pull/214/head' of https://github.com/pointfreeco/swift-navigation
+749171beef01efc231a42f3fdcae911f2dff39ca	not-for-merge	'refs/pull/215/head' of https://github.com/pointfreeco/swift-navigation
+b4965f45bb29c251ef42ad8c3f991bf8c87c3c03	not-for-merge	'refs/pull/216/head' of https://github.com/pointfreeco/swift-navigation
+e15887933c3d2abd529bee69197b40a25dea10c3	not-for-merge	'refs/pull/217/head' of https://github.com/pointfreeco/swift-navigation
+d4b8fcdab003b8dfd1caec358f926f36d796298d	not-for-merge	'refs/pull/218/head' of https://github.com/pointfreeco/swift-navigation
+78588c37bd6fa94e23873e47da02f01f3325a2ab	not-for-merge	'refs/pull/219/head' of https://github.com/pointfreeco/swift-navigation
+24702bbe2c67750fddbe36d5eb1e7253665eba54	not-for-merge	'refs/pull/22/head' of https://github.com/pointfreeco/swift-navigation
+a69a0e8c1d25ddefca6198942f43196b4f6dc7ef	not-for-merge	'refs/pull/221/head' of https://github.com/pointfreeco/swift-navigation
+899ad51b2f7d45b79e3a9363c33da8a8c28453e5	not-for-merge	'refs/pull/222/head' of https://github.com/pointfreeco/swift-navigation
+19ca6024aecbd5ee13e3bb11ff85522a931c4b0b	not-for-merge	'refs/pull/223/head' of https://github.com/pointfreeco/swift-navigation
+06111d9524b3c7d6bbef38282c0b690217e979a1	not-for-merge	'refs/pull/224/head' of https://github.com/pointfreeco/swift-navigation
+ea40872ec43752969921cabc0f92ff25b14acf3c	not-for-merge	'refs/pull/225/head' of https://github.com/pointfreeco/swift-navigation
+30b51c640845025fd4a01d2b2907dc87cc9ae715	not-for-merge	'refs/pull/226/head' of https://github.com/pointfreeco/swift-navigation
+bb760bfbcb05757c4412711220bf5792397c0ff7	not-for-merge	'refs/pull/227/head' of https://github.com/pointfreeco/swift-navigation
+3c93f54b68e26ae9e5c3f6bc95f61cd117d2ac74	not-for-merge	'refs/pull/228/head' of https://github.com/pointfreeco/swift-navigation
+6adb9ae9d0fcd5215a33ef5fef0ef6831073c7d9	not-for-merge	'refs/pull/230/head' of https://github.com/pointfreeco/swift-navigation
+ae70846e0d761ba49dbfba95a3ee056d4fc4a909	not-for-merge	'refs/pull/232/head' of https://github.com/pointfreeco/swift-navigation
+44c3f10571c0066a75bb9200101dde68f1a3d185	not-for-merge	'refs/pull/233/head' of https://github.com/pointfreeco/swift-navigation
+73088a80e32ef3db121f26c009368c618d8ae85f	not-for-merge	'refs/pull/234/head' of https://github.com/pointfreeco/swift-navigation
+e174031d794b68142fce7c5c65a58a782ebb8073	not-for-merge	'refs/pull/235/head' of https://github.com/pointfreeco/swift-navigation
+2837374ef6024a778d950bb2f1cd6189430c41da	not-for-merge	'refs/pull/236/head' of https://github.com/pointfreeco/swift-navigation
+1b5f1eb1812ead79889128c1e9df59886d881e16	not-for-merge	'refs/pull/238/head' of https://github.com/pointfreeco/swift-navigation
+9d0df7e6732ee86bf6e53dc122930c0a65b87aad	not-for-merge	'refs/pull/239/head' of https://github.com/pointfreeco/swift-navigation
+d24c89aa115a41c94b7cf8cb9c535256aee62dca	not-for-merge	'refs/pull/24/head' of https://github.com/pointfreeco/swift-navigation
+47ee61614fe12f11a1155a630f43fd6449ce5307	not-for-merge	'refs/pull/240/head' of https://github.com/pointfreeco/swift-navigation
+7e12601412b67971a6f2c4bc72dd9c45dc55224b	not-for-merge	'refs/pull/241/head' of https://github.com/pointfreeco/swift-navigation
+335c081a0f82aaf6dc295e5cd43709f1ea3f8867	not-for-merge	'refs/pull/241/merge' of https://github.com/pointfreeco/swift-navigation
+3d911e7f7381047f4afedc2e47735ec8546192ad	not-for-merge	'refs/pull/242/head' of https://github.com/pointfreeco/swift-navigation
+9a5ddbeff017ba2ababb1dc523556ce4abec8a71	not-for-merge	'refs/pull/242/merge' of https://github.com/pointfreeco/swift-navigation
+1fd75f7f1542aa01c825335392f41c2755bd4fed	not-for-merge	'refs/pull/243/head' of https://github.com/pointfreeco/swift-navigation
+bc6540bfea22447996821a70617e105326d15a3d	not-for-merge	'refs/pull/243/merge' of https://github.com/pointfreeco/swift-navigation
+2ddd460447aea30fa6eb82f24e54cecb293df32b	not-for-merge	'refs/pull/245/head' of https://github.com/pointfreeco/swift-navigation
+51f6b7d3dda7ef1b5f921cd91e78a47628137281	not-for-merge	'refs/pull/247/head' of https://github.com/pointfreeco/swift-navigation
+a60fe0ac269152e6e3e08ff527ca0e7a4a30d91b	not-for-merge	'refs/pull/248/head' of https://github.com/pointfreeco/swift-navigation
+027ae9a3dfc18276858e73aa034d9bb6bedc4d95	not-for-merge	'refs/pull/25/head' of https://github.com/pointfreeco/swift-navigation
+060313bb62122f33513fc8e284726745a0c0e308	not-for-merge	'refs/pull/252/head' of https://github.com/pointfreeco/swift-navigation
+356aa8523a7b118153362a9613804c69ec0f1700	not-for-merge	'refs/pull/255/head' of https://github.com/pointfreeco/swift-navigation
+63368be04564f308d7580e33cee7aed8638fdcf6	not-for-merge	'refs/pull/256/head' of https://github.com/pointfreeco/swift-navigation
+888547ccbc23a4eb0e306332334d1b9fe61cdff7	not-for-merge	'refs/pull/258/head' of https://github.com/pointfreeco/swift-navigation
+f87f6180d83cf1aea96d212a64250252bb642305	not-for-merge	'refs/pull/259/head' of https://github.com/pointfreeco/swift-navigation
+869a3d25471c4cd5eab38af6c02aeea208efedd6	not-for-merge	'refs/pull/26/head' of https://github.com/pointfreeco/swift-navigation
+ba82a53e9663d5b125d5131fc773d65f10fbef01	not-for-merge	'refs/pull/262/head' of https://github.com/pointfreeco/swift-navigation
+88c40a590e729d6ad203c623c5113dfaf093d6ba	not-for-merge	'refs/pull/266/head' of https://github.com/pointfreeco/swift-navigation
+0670b536b8dab0b434c4cd36dc090bdb04c9e82d	not-for-merge	'refs/pull/27/head' of https://github.com/pointfreeco/swift-navigation
+e1d25b1719368fb98d8174cdf10d127509d771e3	not-for-merge	'refs/pull/272/head' of https://github.com/pointfreeco/swift-navigation
+6a5d8f89fb2bdd5e7cc4fe2228ef91d43a254d97	not-for-merge	'refs/pull/273/head' of https://github.com/pointfreeco/swift-navigation
+9713eed7da1c7f0a03ac806f4f6076e699c970d7	not-for-merge	'refs/pull/274/head' of https://github.com/pointfreeco/swift-navigation
+669ea6c0e59c753a10dc4fdede9cf2dac37190fc	not-for-merge	'refs/pull/277/head' of https://github.com/pointfreeco/swift-navigation
+b18830a3137a1577948fb260196a29dde68476bc	not-for-merge	'refs/pull/277/merge' of https://github.com/pointfreeco/swift-navigation
+52372868fce2aa64b9b8a8d1faa38a717e9d96e3	not-for-merge	'refs/pull/278/head' of https://github.com/pointfreeco/swift-navigation
+f9601891768fe1f97a6e0cfcb258ec5f588888f7	not-for-merge	'refs/pull/28/head' of https://github.com/pointfreeco/swift-navigation
+a706b7d5f186ad8c9586430532a4155403fc8fb2	not-for-merge	'refs/pull/282/head' of https://github.com/pointfreeco/swift-navigation
+72b2ab976bad9f4ba4624cda826ce371bf47b570	not-for-merge	'refs/pull/284/head' of https://github.com/pointfreeco/swift-navigation
+07b5cdb8401c883b27e626c65e73189456027d9a	not-for-merge	'refs/pull/286/head' of https://github.com/pointfreeco/swift-navigation
+e81e9e47360d3b35fa4141db43a17512fd317103	not-for-merge	'refs/pull/286/merge' of https://github.com/pointfreeco/swift-navigation
+225ed37da620bd6af9c59a3af27af7f5809b10f5	not-for-merge	'refs/pull/288/head' of https://github.com/pointfreeco/swift-navigation
+b9a3cb642d22b375110d9a431c9b85c07a1b8589	not-for-merge	'refs/pull/289/head' of https://github.com/pointfreeco/swift-navigation
+5690ea315bc529e03f720afdf8197c4e84eb53d2	not-for-merge	'refs/pull/295/head' of https://github.com/pointfreeco/swift-navigation
+f71052d3c3da867c692135c065d5684c3a16477a	not-for-merge	'refs/pull/296/head' of https://github.com/pointfreeco/swift-navigation
+2f317db538d4963c83435e28edbe281743bd2082	not-for-merge	'refs/pull/297/head' of https://github.com/pointfreeco/swift-navigation
+12289a2ac33f64506c6902a7c47365730d179e7f	not-for-merge	'refs/pull/3/head' of https://github.com/pointfreeco/swift-navigation
+14ab49ca8bcbe6f8a8176447a19ed7714f501118	not-for-merge	'refs/pull/30/head' of https://github.com/pointfreeco/swift-navigation
+3e2bd50257796b67587993ad94496ba0d225ea23	not-for-merge	'refs/pull/300/head' of https://github.com/pointfreeco/swift-navigation
+5bebf6ffdd725da5eae9a2f898eb88fcc8568380	not-for-merge	'refs/pull/301/head' of https://github.com/pointfreeco/swift-navigation
+5ac62c0fdb37596c746cd97e530a8c3287f078c0	not-for-merge	'refs/pull/302/head' of https://github.com/pointfreeco/swift-navigation
+9597002fd2c6367b63a7c62541f3721ebf843fa1	not-for-merge	'refs/pull/303/head' of https://github.com/pointfreeco/swift-navigation
+128c16cd137b21b0ee40a6fca0e05b2b1bc1e6d9	not-for-merge	'refs/pull/304/head' of https://github.com/pointfreeco/swift-navigation
+fbae05d05d5a8c824fc56161c48081e5d4229142	not-for-merge	'refs/pull/306/head' of https://github.com/pointfreeco/swift-navigation
+87ca1074ab17325d9406e64f3d5538912e7f413e	not-for-merge	'refs/pull/307/head' of https://github.com/pointfreeco/swift-navigation
+ef671c32deb6b39a3227a1b9e86e3e64c107c1f8	not-for-merge	'refs/pull/308/head' of https://github.com/pointfreeco/swift-navigation
+4ab0f87a77d4e1b537fece1f1272b3edc5ce9eed	not-for-merge	'refs/pull/31/head' of https://github.com/pointfreeco/swift-navigation
+76d916bbadf4783be004cbc43582bd9a02cd9681	not-for-merge	'refs/pull/310/head' of https://github.com/pointfreeco/swift-navigation
+69360bd22b744dcaebd6529d38461de7ce537b76	not-for-merge	'refs/pull/311/head' of https://github.com/pointfreeco/swift-navigation
+91732cc12394546abc67375d41f7b79f9a368f41	not-for-merge	'refs/pull/312/head' of https://github.com/pointfreeco/swift-navigation
+4485abf67a5ceca1e17e97450281420baf7fd8f3	not-for-merge	'refs/pull/314/head' of https://github.com/pointfreeco/swift-navigation
+ecfd7f113416935240c2311650a97c34f7f13944	not-for-merge	'refs/pull/315/head' of https://github.com/pointfreeco/swift-navigation
+f15ce79bdcdeda9685e4610d0542fc6c0bd14dc3	not-for-merge	'refs/pull/316/head' of https://github.com/pointfreeco/swift-navigation
+e57696df5909cdc2f6b40687c1b90bdddb3e285e	not-for-merge	'refs/pull/317/head' of https://github.com/pointfreeco/swift-navigation
+98e46bc75778da8dda52858545a83b885218cf0e	not-for-merge	'refs/pull/318/head' of https://github.com/pointfreeco/swift-navigation
+a3efdaca1374d40f876f1dbdf20655d1bba63505	not-for-merge	'refs/pull/318/merge' of https://github.com/pointfreeco/swift-navigation
+548d9d18b7d84b21bd25de037233fcff3ab32200	not-for-merge	'refs/pull/320/head' of https://github.com/pointfreeco/swift-navigation
+db80ac5793098770012dd740079dd3f56bc7e1d3	not-for-merge	'refs/pull/321/head' of https://github.com/pointfreeco/swift-navigation
+76904b139d9b4f2432bbe5adae86b08c39b2eb33	not-for-merge	'refs/pull/321/merge' of https://github.com/pointfreeco/swift-navigation
+ccd8768f816711b2117a96ad126f0085e288ac6f	not-for-merge	'refs/pull/322/head' of https://github.com/pointfreeco/swift-navigation
+bf0885e5dc41bc633cf3915ba7fe3baa4e15878c	not-for-merge	'refs/pull/322/merge' of https://github.com/pointfreeco/swift-navigation
+5eab66bfd0394c1a9326caa5f2121c39aee2db3d	not-for-merge	'refs/pull/324/head' of https://github.com/pointfreeco/swift-navigation
+9e39378dd432b2a85d4f3747a03b68ed7dcff80b	not-for-merge	'refs/pull/324/merge' of https://github.com/pointfreeco/swift-navigation
+a3e8ceada0119253d08776ede27ab366bd9ab5a3	not-for-merge	'refs/pull/325/head' of https://github.com/pointfreeco/swift-navigation
+6a1195393e0d272945b6fa711279185f70aedf76	not-for-merge	'refs/pull/325/merge' of https://github.com/pointfreeco/swift-navigation
+fb29f49f0905f23cc5c9ac623b5040816588cf4d	not-for-merge	'refs/pull/327/head' of https://github.com/pointfreeco/swift-navigation
+06eadba7808bf16451c7b887dca4c515ff64afac	not-for-merge	'refs/pull/328/head' of https://github.com/pointfreeco/swift-navigation
+abddcfd2c64f3f4a642424593f8a1e28d44cb948	not-for-merge	'refs/pull/328/merge' of https://github.com/pointfreeco/swift-navigation
+d0680df2c94b302d5d0514582133ab17cf886d46	not-for-merge	'refs/pull/329/head' of https://github.com/pointfreeco/swift-navigation
+858f2c11040575518bb404e7784775fabace296d	not-for-merge	'refs/pull/33/head' of https://github.com/pointfreeco/swift-navigation
+58ee19d5aad579ca9b2730df4835b30f50ba3e5a	not-for-merge	'refs/pull/330/head' of https://github.com/pointfreeco/swift-navigation
+0c1b0077818500ba630b3226c877f487308e7a0b	not-for-merge	'refs/pull/331/head' of https://github.com/pointfreeco/swift-navigation
+41eba90d7f177c05d2009aab96b44c61ecdcc9da	not-for-merge	'refs/pull/331/merge' of https://github.com/pointfreeco/swift-navigation
+c6ddf73a192beaab8f911a4b0ad19f0778a4a528	not-for-merge	'refs/pull/332/head' of https://github.com/pointfreeco/swift-navigation
+95051f933cff0518a4a9cff2cc2beec946235caf	not-for-merge	'refs/pull/332/merge' of https://github.com/pointfreeco/swift-navigation
+54fdf6ee21fd4607634c2aa0449daa2ff49cb20b	not-for-merge	'refs/pull/335/head' of https://github.com/pointfreeco/swift-navigation
+6196cb0c2de0478769da0db50ee85ea80d4f558a	not-for-merge	'refs/pull/335/merge' of https://github.com/pointfreeco/swift-navigation
+a8dfa6e5819e9058b72552593e5f428b58ba975e	not-for-merge	'refs/pull/337/head' of https://github.com/pointfreeco/swift-navigation
+3ec6c43529d402b1428dc8de8b1bc2f70bf13cbd	not-for-merge	'refs/pull/337/merge' of https://github.com/pointfreeco/swift-navigation
+b81f08794f5faca68e7a1616bef0d6057fb6b1b1	not-for-merge	'refs/pull/338/head' of https://github.com/pointfreeco/swift-navigation
+e61b4527fe7c74c4287e70f2811537d167e6c435	not-for-merge	'refs/pull/338/merge' of https://github.com/pointfreeco/swift-navigation
+71a62ece3a7c0dd1a5eff9932f7f62a9f8fd45da	not-for-merge	'refs/pull/339/head' of https://github.com/pointfreeco/swift-navigation
+f40c0c4fa09127fdc66250d0895cf92a65699617	not-for-merge	'refs/pull/339/merge' of https://github.com/pointfreeco/swift-navigation
+78c3560b15d5ec6b952f1e03bd6253615e0c3ae3	not-for-merge	'refs/pull/34/head' of https://github.com/pointfreeco/swift-navigation
+ca3bf9af5c603b8af22fca11e960d5b17621b0b5	not-for-merge	'refs/pull/340/head' of https://github.com/pointfreeco/swift-navigation
+ec4935d18e8914c5128c65dd65c499a03e2e6ef4	not-for-merge	'refs/pull/340/merge' of https://github.com/pointfreeco/swift-navigation
+1c2ebca5cfdd408beb021c144b4b409c9e30169e	not-for-merge	'refs/pull/35/head' of https://github.com/pointfreeco/swift-navigation
+7255e80cc29f91c27d60118d85e792a7a6b4a2d1	not-for-merge	'refs/pull/36/head' of https://github.com/pointfreeco/swift-navigation
+ae1de24a7d591408e79459fac877829b7399e001	not-for-merge	'refs/pull/38/head' of https://github.com/pointfreeco/swift-navigation
+132b9707f4a5a06bcd4378ca9c9022aced0a61a5	not-for-merge	'refs/pull/42/head' of https://github.com/pointfreeco/swift-navigation
+bc1f0254ec89c7432560ff4d19ed65e0848a2d68	not-for-merge	'refs/pull/43/head' of https://github.com/pointfreeco/swift-navigation
+18cef1f3ac452d499d22e619d5691d0d88705d86	not-for-merge	'refs/pull/45/head' of https://github.com/pointfreeco/swift-navigation
+2299e20152258e15c6892aa2fae623f56c6078dc	not-for-merge	'refs/pull/46/head' of https://github.com/pointfreeco/swift-navigation
+901bd10e8a7bc40b2d65572534406f68f5b84843	not-for-merge	'refs/pull/49/head' of https://github.com/pointfreeco/swift-navigation
+1ae46f8548979d8381b653b644ae1e58ec496ead	not-for-merge	'refs/pull/5/head' of https://github.com/pointfreeco/swift-navigation
+12d4db6cd06ebdc439f6b53f43521213e0fa2879	not-for-merge	'refs/pull/50/head' of https://github.com/pointfreeco/swift-navigation
+8b75a619670c56fd81222d0890dca8cff8f4ef08	not-for-merge	'refs/pull/54/head' of https://github.com/pointfreeco/swift-navigation
+10cfad992ef91cce24bbc90cd790bfd1da311450	not-for-merge	'refs/pull/58/head' of https://github.com/pointfreeco/swift-navigation
+7453bea5d2d9ed3bff91a9303b237432f55ca59b	not-for-merge	'refs/pull/6/head' of https://github.com/pointfreeco/swift-navigation
+e25fd6d210b9835bef30c72c834c491d69077869	not-for-merge	'refs/pull/60/head' of https://github.com/pointfreeco/swift-navigation
+a907eb76cebafcecb9439f6c2bc9307ebc28bd01	not-for-merge	'refs/pull/61/head' of https://github.com/pointfreeco/swift-navigation
+42607c5028859977f12eea9a0a690e1a2e3a537f	not-for-merge	'refs/pull/62/head' of https://github.com/pointfreeco/swift-navigation
+f452b0bbedeb327e87abe2542b324de31dff75b6	not-for-merge	'refs/pull/63/head' of https://github.com/pointfreeco/swift-navigation
+6e79d35a336a621031dbde1faca7d0a0d2dbe5bd	not-for-merge	'refs/pull/64/head' of https://github.com/pointfreeco/swift-navigation
+ecbda04bf77e1f654950b23ba8dfdcb857bacd03	not-for-merge	'refs/pull/66/head' of https://github.com/pointfreeco/swift-navigation
+52032635b361af9bc59cfa83759e3a247249b1eb	not-for-merge	'refs/pull/67/head' of https://github.com/pointfreeco/swift-navigation
+d254c39cbb872b8dbe92c524e2efcec3d84ad28f	not-for-merge	'refs/pull/68/head' of https://github.com/pointfreeco/swift-navigation
+9e43c3f6b822a41a64b9edb2b6402cd80a8eb83f	not-for-merge	'refs/pull/70/head' of https://github.com/pointfreeco/swift-navigation
+6b994711572defdee4e470c85e4cf82fb48bc829	not-for-merge	'refs/pull/71/head' of https://github.com/pointfreeco/swift-navigation
+021c1c1f8b5eb676b5c08354265584c2a34bb837	not-for-merge	'refs/pull/74/head' of https://github.com/pointfreeco/swift-navigation
+cebce8030f3b38c7186e9037921eadc58541e119	not-for-merge	'refs/pull/76/head' of https://github.com/pointfreeco/swift-navigation
+1ccbf68eecb685d7302528b2bb51f352186703b0	not-for-merge	'refs/pull/77/head' of https://github.com/pointfreeco/swift-navigation
+3ca52a499f63f3d5095550ff9ecb0e6eaddf4ac5	not-for-merge	'refs/pull/78/head' of https://github.com/pointfreeco/swift-navigation
+08cf1fc4f120f1ff04d2f759c27d4da8aed5f55b	not-for-merge	'refs/pull/83/head' of https://github.com/pointfreeco/swift-navigation
+87431dc83a7e2c1b6235854915424e347bd9d6b5	not-for-merge	'refs/pull/85/head' of https://github.com/pointfreeco/swift-navigation
+bc7f7fa21bf46730d64c90f54045855b6c51e4cf	not-for-merge	'refs/pull/88/head' of https://github.com/pointfreeco/swift-navigation
+e9884571290341fe46823debf5ab390ea107fe7a	not-for-merge	'refs/pull/89/head' of https://github.com/pointfreeco/swift-navigation
+6c76adff2435b45e9cbe0d26c06bbef633aa58b2	not-for-merge	'refs/pull/9/head' of https://github.com/pointfreeco/swift-navigation
+2ce86b046304278fa721e5ef4ceece04e00bd227	not-for-merge	'refs/pull/92/head' of https://github.com/pointfreeco/swift-navigation
+89c91dc0edea9348e3653ddf57c08df6c2d0025d	not-for-merge	'refs/pull/93/head' of https://github.com/pointfreeco/swift-navigation
+2072648ecd004fb11f047abaa185c486c7a57c9e	not-for-merge	'refs/pull/94/head' of https://github.com/pointfreeco/swift-navigation
+963f644744aff54497944a75db7d6ab5b29abfab	not-for-merge	'refs/pull/97/head' of https://github.com/pointfreeco/swift-navigation
+2694c03284a368168b3e0b8d7ab52626802d2246	not-for-merge	tag '0.1.0' of https://github.com/pointfreeco/swift-navigation
+7191be709528b0d0040105c7071d35fbb923d462	not-for-merge	tag '0.2.0' of https://github.com/pointfreeco/swift-navigation
+a974c35e3d3617f47e2de79e563b78c38bc6a9f1	not-for-merge	tag '0.3.0' of https://github.com/pointfreeco/swift-navigation
+37eb93f853c6e1a354ba5ffcdc5c425a6e8f62e5	not-for-merge	tag '0.4.0' of https://github.com/pointfreeco/swift-navigation
+8db42e81f62e131df71a8427c000b0ffbff6c1c2	not-for-merge	tag '0.4.1' of https://github.com/pointfreeco/swift-navigation
+4b666bcc59ba1711a7543ecb37e1d181963b180c	not-for-merge	tag '0.4.2' of https://github.com/pointfreeco/swift-navigation
+a4a84e387c83a735e56d03bf9736d49a07b3c3ae	not-for-merge	tag '0.4.3' of https://github.com/pointfreeco/swift-navigation
+949a90619d43a57a2a239f8e740be39c0d2cf972	not-for-merge	tag '0.4.4' of https://github.com/pointfreeco/swift-navigation
+46acf5ecc1cabdb28d7fe03289f6c8b13a023f52	not-for-merge	tag '0.4.5' of https://github.com/pointfreeco/swift-navigation
+ddc01cdcddfd30ef7a966049b2e1d251e224ad93	not-for-merge	tag '0.5.0' of https://github.com/pointfreeco/swift-navigation
+bf0fb9d53019cbde1a1e0cf290b560a0a0411282	not-for-merge	tag '0.6.0' of https://github.com/pointfreeco/swift-navigation
+270a754308f5440be52fc295242eb7031638bd15	not-for-merge	tag '0.6.1' of https://github.com/pointfreeco/swift-navigation
+0a0e1b321d70ee6a464ecfe6b0136d9eff77ebfc	not-for-merge	tag '0.7.0' of https://github.com/pointfreeco/swift-navigation
+47dd574b900ba5ba679f56ea00d4d282fc7305a6	not-for-merge	tag '0.7.1' of https://github.com/pointfreeco/swift-navigation
+db81007362f998654239021ca9308a264e59d3e2	not-for-merge	tag '0.7.2' of https://github.com/pointfreeco/swift-navigation
+2aa885e719087ee19df251c08a5980ad3e787f12	not-for-merge	tag '0.8.0' of https://github.com/pointfreeco/swift-navigation
+f5bcdac5b6bb3f826916b14705f37a3937c2fd34	not-for-merge	tag '1.0.0' of https://github.com/pointfreeco/swift-navigation
+905274b2bd98be556d2cfcf31b94d5979b924755	not-for-merge	tag '1.0.1' of https://github.com/pointfreeco/swift-navigation
+6eb293c49505d86e9e24232cb6af6be7fff93bd5	not-for-merge	tag '1.0.2' of https://github.com/pointfreeco/swift-navigation
+74adfb8e48724c50d0ac148c658ae5fa7dfd6b6d	not-for-merge	tag '1.0.3' of https://github.com/pointfreeco/swift-navigation
+a3aa5d46e8bf174d773d23b030f1c103999398ac	not-for-merge	tag '1.1.0' of https://github.com/pointfreeco/swift-navigation
+78f9d72cf667adb47e2040aa373185c88c63f0dc	not-for-merge	tag '1.2.0' of https://github.com/pointfreeco/swift-navigation
+d9e72f3083c08375794afa216fb2f89c0114f303	not-for-merge	tag '1.2.1' of https://github.com/pointfreeco/swift-navigation
+2ec6c3a15293efff6083966b38439a4004f25565	not-for-merge	tag '1.3.0' of https://github.com/pointfreeco/swift-navigation
+7ab04c6e2e6a73d34d5a762970ef88bf0aedb084	not-for-merge	tag '1.4.0' of https://github.com/pointfreeco/swift-navigation
+b7c9a79f6f6b1fefb87d3e5a83a9c2fe7cdc9720	not-for-merge	tag '1.5.0' of https://github.com/pointfreeco/swift-navigation
+f1d9d6a2e817cbed681c54b9975d78bf8d66ba38	not-for-merge	tag '1.5.1' of https://github.com/pointfreeco/swift-navigation
+97f854044356ac082e7e698f39264cc035544d77	not-for-merge	tag '1.5.2' of https://github.com/pointfreeco/swift-navigation
+1b18b77a2e32250b45d3429f9928222981983826	not-for-merge	tag '1.5.3' of https://github.com/pointfreeco/swift-navigation
+fc91d591ebba1f90d65028ccb65c861e5979e898	not-for-merge	tag '1.5.4' of https://github.com/pointfreeco/swift-navigation
+f6aee4300a956e90e6d000f29c26aa793beefbb2	not-for-merge	tag '2.0.0' of https://github.com/pointfreeco/swift-navigation
+2101b0727306a18064e4c4ba0d886f3efc6b3a07	not-for-merge	tag '2.0.1' of https://github.com/pointfreeco/swift-navigation
+e7b6b938433e57857f88c992a9d1c75671d437f1	not-for-merge	tag '2.0.2' of https://github.com/pointfreeco/swift-navigation
+47cfd149ed01223d14fc8e3f52ae27d3a35fe036	not-for-merge	tag '2.0.3' of https://github.com/pointfreeco/swift-navigation
+b8dced6524996b3dc5569346697ddcb1bc4307aa	not-for-merge	tag '2.0.4' of https://github.com/pointfreeco/swift-navigation
+339ba3e305dc727b5baa6ddb476430a842167d4e	not-for-merge	tag '2.0.5' of https://github.com/pointfreeco/swift-navigation
+70321c441d51b0b893c3abbf79687f550a027fde	not-for-merge	tag '2.0.6' of https://github.com/pointfreeco/swift-navigation
+4d04eb04807dc3176515184abe08c3adcbb04713	not-for-merge	tag '2.1.0' of https://github.com/pointfreeco/swift-navigation
+e834b3760731160d7d448509ee6a1408c8582a6b	not-for-merge	tag '2.2.0' of https://github.com/pointfreeco/swift-navigation
+d1bdbd8a5d1d1dfd2e4bb1f5e2f6facb631404d4	not-for-merge	tag '2.2.1' of https://github.com/pointfreeco/swift-navigation
+16a27ab7ae0abfefbbcba73581b3e2380b47a579	not-for-merge	tag '2.2.2' of https://github.com/pointfreeco/swift-navigation
+e28911721538fa0c2439e92320bad13e3200866f	not-for-merge	tag '2.2.3' of https://github.com/pointfreeco/swift-navigation
+db6bc9dbfed001f21e6728fd36413d9342c235b4	not-for-merge	tag '2.3.0' of https://github.com/pointfreeco/swift-navigation
+ae208d1a5cf33aee1d43734ea780a09ada6e2a21	not-for-merge	tag '2.3.1' of https://github.com/pointfreeco/swift-navigation
+ae208d1a5cf33aee1d43734ea780a09ada6e2a21	not-for-merge	tag '2.3.2' of https://github.com/pointfreeco/swift-navigation
+4e89284c1966538109dc783497405bc680e9bc96	not-for-merge	tag '2.4.0' of https://github.com/pointfreeco/swift-navigation
+819dea23847a7b6693801cf7e248ba766a72aee1	not-for-merge	tag '2.4.1' of https://github.com/pointfreeco/swift-navigation
+6b7f44d218e776bb7a5246efb940440d57c8b2cf	not-for-merge	tag '2.4.2' of https://github.com/pointfreeco/swift-navigation
+65806ffbc9eb3be026b56fafaf26de0bb8b132de	not-for-merge	tag '2.5.0' of https://github.com/pointfreeco/swift-navigation
+91415670c91d41e8e1872ef6fe1bf118e20dee37	not-for-merge	tag '2.5.1' of https://github.com/pointfreeco/swift-navigation
+bf498690e1f6b4af790260f542e8428a4ba10d78	not-for-merge	tag '2.6.0' of https://github.com/pointfreeco/swift-navigation
+e7441dc4dfec6a4ae929e614e3c1e67c6639d164	not-for-merge	tag '2.7.0' of https://github.com/pointfreeco/swift-navigation

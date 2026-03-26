@@ -1,3 +1,4 @@
+@testable import Dependencies
 import XCTest
 
 @testable import XcodeAgentUI
@@ -11,7 +12,11 @@ final class SessionManagerTests: XCTestCase {
   override func setUp() {
     super.setUp()
     mockWS = BridgeWebSocket()
-    sut = SessionManager(bridgeWS: mockWS)
+    sut = withDependencies {
+      $0.hapticClient = HapticClient(perform: {})
+    } operation: {
+      SessionManager(bridgeWS: mockWS)
+    }
   }
 
   override func tearDown() {

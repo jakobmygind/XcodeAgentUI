@@ -1,0 +1,82 @@
+{
+  "": {
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/primary.swiftdeps"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/ActorIsolated.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/ActorIsolated.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/ActorIsolated.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/ActorIsolated~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/ActorIsolated.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/ActorIsolated.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/AnyHashableSendable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AnyHashableSendable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AnyHashableSendable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AnyHashableSendable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AnyHashableSendable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AnyHashableSendable.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/AsyncStream.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncStream.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncStream.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncStream~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncStream.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncStream.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/AsyncThrowingStream.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncThrowingStream.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncThrowingStream.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncThrowingStream~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncThrowingStream.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/AsyncThrowingStream.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/Internal/Locking.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Locking.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Locking.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Locking~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Locking.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Locking.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/Internal/UncheckedBox.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedBox.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedBox.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedBox~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedBox.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedBox.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/LockIsolated.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/LockIsolated.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/LockIsolated.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/LockIsolated~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/LockIsolated.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/LockIsolated.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/MainSerialExecutor.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/MainSerialExecutor.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/MainSerialExecutor.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/MainSerialExecutor~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/MainSerialExecutor.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/MainSerialExecutor.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/Result.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Result.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Result.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Result~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Result.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Result.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/Task.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Task.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Task.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Task~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Task.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/Task.dia"
+  },
+  "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/UncheckedSendable.swift": {
+    "dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedSendable.d",
+    "object": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedSendable.swift.o",
+    "swiftmodule": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedSendable~partial.swiftmodule",
+    "swift-dependencies": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedSendable.swiftdeps",
+    "diagnostics": "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/ConcurrencyExtras.build/UncheckedSendable.dia"
+  }
+}

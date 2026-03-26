@@ -27,6 +27,7 @@ let package = Package(
       name: "XcodeAgentUI",
       dependencies: [
         .product(name: "Dependencies", package: "swift-dependencies"),
+        .product(name: "DependenciesMacros", package: "swift-dependencies"),
         .product(name: "Sharing", package: "swift-sharing"),
         .product(name: "SwiftNavigation", package: "swift-navigation"),
         .product(name: "SwiftUINavigation", package: "swift-navigation"),

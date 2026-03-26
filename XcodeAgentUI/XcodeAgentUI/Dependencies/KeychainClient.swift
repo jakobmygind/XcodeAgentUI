@@ -1,23 +1,17 @@
 import Dependencies
+import DependenciesMacros
 import Foundation
 
+/// Client for secure credential storage via the macOS Keychain.
+///
+/// Wraps `KeychainManager` (Security framework) for dependency injection,
+/// enabling deterministic testing of code that reads or writes API tokens.
+@DependencyClient
 struct KeychainClient: Sendable {
-  var save: @Sendable (_ key: KeychainManager.TokenKey, _ value: String) -> Bool
+  var save: @Sendable (_ key: KeychainManager.TokenKey, _ value: String) -> Bool = { _, _ in false }
   var load: @Sendable (_ key: KeychainManager.TokenKey) -> String?
-  var delete: @Sendable (_ key: KeychainManager.TokenKey) -> Bool
-  var hasValue: @Sendable (_ key: KeychainManager.TokenKey) -> Bool
-
-  init(
-    save: @escaping @Sendable (_ key: KeychainManager.TokenKey, _ value: String) -> Bool = { _, _ in false },
-    load: @escaping @Sendable (_ key: KeychainManager.TokenKey) -> String? = { _ in nil },
-    delete: @escaping @Sendable (_ key: KeychainManager.TokenKey) -> Bool = { _ in false },
-    hasValue: @escaping @Sendable (_ key: KeychainManager.TokenKey) -> Bool = { _ in false }
-  ) {
-    self.save = save
-    self.load = load
-    self.delete = delete
-    self.hasValue = hasValue
-  }
+  var delete: @Sendable (_ key: KeychainManager.TokenKey) -> Bool = { _ in false }
+  var hasValue: @Sendable (_ key: KeychainManager.TokenKey) -> Bool = { _ in false }
 }
 
 extension KeychainClient: DependencyKey {
@@ -28,10 +22,6 @@ extension KeychainClient: DependencyKey {
       delete: { KeychainManager.delete(key: $0) },
       hasValue: { KeychainManager.hasValue(key: $0) }
     )
-  }
-
-  static var testValue: KeychainClient {
-    KeychainClient()
   }
 }
 

@@ -1,3 +1,4 @@
+@testable import Dependencies
 import XCTest
 
 @testable import XcodeAgentUI
@@ -9,7 +10,17 @@ final class AgentServiceTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    sut = AgentService()
+    sut = withDependencies {
+      $0.keychainClient = KeychainClient(
+        save: { _, _ in true },
+        load: { _ in nil },
+        delete: { _ in true },
+        hasValue: { _ in false }
+      )
+      $0.hapticClient = HapticClient(perform: {})
+    } operation: {
+      AgentService()
+    }
   }
 
   override func tearDown() {
@@ -106,7 +117,17 @@ final class AgentServiceTests: XCTestCase {
   // MARK: - Mock Service
 
   func testMockServiceIsPopulated() {
-    let mock = MockAgentService()
+    let mock = withDependencies {
+      $0.keychainClient = KeychainClient(
+        save: { _, _ in true },
+        load: { _ in nil },
+        delete: { _ in true },
+        hasValue: { _ in false }
+      )
+      $0.hapticClient = HapticClient(perform: {})
+    } operation: {
+      MockAgentService()
+    }
     XCTAssertEqual(mock.routerStatus.state, .running)
     XCTAssertEqual(mock.bridgeStatus.state, .running)
     XCTAssertNotNil(mock.sessionManager.activeSession)

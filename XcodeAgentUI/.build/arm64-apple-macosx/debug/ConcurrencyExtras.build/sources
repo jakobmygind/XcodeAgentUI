@@ -1,0 +1,11 @@
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/ActorIsolated.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/AnyHashableSendable.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/AsyncStream.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/AsyncThrowingStream.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/Internal/Locking.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/Internal/UncheckedBox.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/LockIsolated.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/MainSerialExecutor.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/Result.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/Task.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-concurrency-extras/Sources/ConcurrencyExtras/UncheckedSendable.swift

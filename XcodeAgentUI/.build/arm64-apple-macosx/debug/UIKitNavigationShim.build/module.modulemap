@@ -1,0 +1,4 @@
+module UIKitNavigationShim {
+    umbrella "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/swift-navigation/Sources/UIKitNavigationShim/include"
+    export *
+}

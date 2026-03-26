@@ -1,13 +1,15 @@
 import AppKit
 import Dependencies
+import DependenciesMacros
 import Foundation
 
+/// Client for macOS haptic feedback.
+///
+/// Provides tactile feedback for important UI events such as
+/// acceptance criteria completion and ticket status changes.
+@DependencyClient
 struct HapticClient: Sendable {
   var perform: @Sendable () -> Void
-
-  init(perform: @escaping @Sendable () -> Void = {}) {
-    self.perform = perform
-  }
 }
 
 extension HapticClient: DependencyKey {
@@ -15,10 +17,6 @@ extension HapticClient: DependencyKey {
     HapticClient(perform: {
       NSHapticFeedbackManager.defaultPerformer.perform(.levelChange, performanceTime: .default)
     })
-  }
-
-  static var testValue: HapticClient {
-    HapticClient()
   }
 }
 

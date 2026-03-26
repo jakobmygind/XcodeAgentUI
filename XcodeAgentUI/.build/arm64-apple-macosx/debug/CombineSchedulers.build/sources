@@ -1,0 +1,13 @@
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/AnyScheduler.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/Concurrency.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/ImmediateScheduler.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/Internal/Deprecations.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/Internal/Lock.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/Internal/NSRecursiveLock.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/Internal/Platform.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/SwiftUI.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/TestScheduler.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/Timer.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/UIKit.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/UIScheduler.swift
+/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/checkouts/combine-schedulers/Sources/CombineSchedulers/UnimplementedScheduler.swift

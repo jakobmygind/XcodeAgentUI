@@ -147,6 +147,7 @@ The app is built with **SwiftUI** and follows [Point-Free](https://www.pointfree
 |---------|-------|
 | `@Observable` | All service and model classes use Observation for reactive state |
 | `@MainActor` | Thread safety — all observable classes are main-actor isolated |
+| `@DependencyClient` | Macro-generated DI clients with auto-stubbed test values |
 | `@Dependency` | Point-Free dependency injection for Keychain and haptic clients |
 | `@Shared(.appStorage)` | Persistent user preferences with observation support |
 

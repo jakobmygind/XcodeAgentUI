@@ -1,0 +1,3 @@
+module UIKitNavigation {
+    header "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/UIKitNavigation.build/include/UIKitNavigation-Swift.h"
+}

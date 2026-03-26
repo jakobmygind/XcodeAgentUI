@@ -1,0 +1,3 @@
+module Perception {
+    header "/private/tmp/XcodeAgentUI-fresh/XcodeAgentUI/.build/arm64-apple-macosx/debug/Perception.build/include/Perception-Swift.h"
+}
