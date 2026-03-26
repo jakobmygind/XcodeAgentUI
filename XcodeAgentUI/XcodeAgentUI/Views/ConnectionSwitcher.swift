@@ -287,23 +287,28 @@ struct AddProfileSheet: View {
     private func saveProfile() {
         let authMethod: AuthMethod = useAuth ? .bearerToken("keychain-ref") : .none
         
-        let profile = ConnectionProfile(
-            name: name,
-            kind: selectedKind,
-            backendHost: host,
-            backendPort: Int(port) ?? 9300,
-            useTLS: useTLS,
-            authMethod: authMethod,
-            isDefault: isDefault
-        )
-        
-        // Save token if needed
-        if useAuth && !authToken.isEmpty {
-            try? ProfileStore.shared.saveToken(for: profile.id, token: authToken)
+        do {
+            let profile = try ConnectionProfile(
+                name: name,
+                kind: selectedKind,
+                backendHost: host,
+                backendPort: Int(port) ?? 9300,
+                useTLS: useTLS,
+                authMethod: authMethod,
+                isDefault: isDefault
+            )
+            
+            // Save token if needed
+            if useAuth && !authToken.isEmpty {
+                try? ProfileStore.shared.saveToken(for: profile.id, token: authToken)
+            }
+            
+            onSave(profile)
+            dismiss()
+        } catch {
+            // Handle validation error - in production, show alert
+            print("Failed to create profile: \(error)")
         }
-        
-        onSave(profile)
-        dismiss()
     }
 }
 
@@ -404,8 +409,8 @@ struct DiscoverySheet: View {
     private func discoveredBackendRow(_ backend: DiscoveredBackend) -> some View {
         Button {
             Task {
-                if let resolved = try? await localDiscovery.resolve(backend) {
-                    let profile = resolved.toProfile(kind: .local)
+                if let resolved = try? await localDiscovery.resolve(backend),
+                   let profile = resolved.toProfile(kind: .local) {
                     onSelect(profile)
                     dismiss()
                 }
@@ -422,12 +427,13 @@ struct DiscoverySheet: View {
             }
         }
     }
-    
+
     private func tailscalePeerRow(_ peer: TailscalePeer) -> some View {
         Button {
-            let profile = peer.toProfile()
-            onSelect(profile)
-            dismiss()
+            if let profile = peer.toProfile() {
+                onSelect(profile)
+                dismiss()
+            }
         } label: {
             HStack {
                 Image(systemName: "network")

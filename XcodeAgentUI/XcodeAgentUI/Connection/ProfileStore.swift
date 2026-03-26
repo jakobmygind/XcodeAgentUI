@@ -1,116 +1,220 @@
 import Foundation
 
-/// Manages persistence of connection profiles
+/// Manages persistence of connection profiles to JSON file
 actor ProfileStore {
+    /// Shared singleton instance
     static let shared = ProfileStore()
     
+    /// URL for the profiles JSON file
     private let fileURL: URL
-    private var profiles: [ConnectionProfile] = []
-    private var hasLoaded = false
     
-    init() {
-        let homeDir = FileManager.default.homeDirectoryForCurrentUser
-        let openclawDir = homeDir.appendingPathComponent(".openclaw", isDirectory: true)
-        self.fileURL = openclawDir.appendingPathComponent("profiles.json")
-        
-        // Ensure directory exists
-        try? FileManager.default.createDirectory(at: openclawDir, withIntermediateDirectories: true)
+    /// In-memory cache of profiles
+    private var profiles: [ConnectionProfile] = []
+    
+    /// Whether the store has been initialized with defaults
+    private var isInitialized = false
+    
+    /// Initialize with custom file URL (for testing)
+    init(fileURL: URL? = nil) {
+        if let fileURL = fileURL {
+            self.fileURL = fileURL
+        } else {
+            let home = FileManager.default.homeDirectoryForCurrentUser
+            self.fileURL = home.appendingPathComponent(".openclaw/profiles.json")
+        }
     }
+    
+    // MARK: - Public API
     
     /// Load profiles from disk, creating defaults if none exist
     func load() async throws -> [ConnectionProfile] {
-        if hasLoaded {
+        // Return cached profiles if already loaded
+        guard !isInitialized else {
             return profiles
         }
         
+        // Ensure directory exists
+        try createDirectoryIfNeeded()
+        
+        // Check if file exists
         guard FileManager.default.fileExists(atPath: fileURL.path) else {
-            // Create default profiles
+            // Create default profiles on first launch
             profiles = [ConnectionProfile.local]
-            try await save(profiles)
-            hasLoaded = true
+            try await save()
+            isInitialized = true
             return profiles
         }
         
-        let data = try Data(contentsOf: fileURL)
-        profiles = try JSONDecoder().decode([ConnectionProfile].self, from: data)
-        hasLoaded = true
-        return profiles
+        // Read and decode
+        let data: Data
+        do {
+            data = try Data(contentsOf: fileURL)
+        } catch {
+            throw ProfileStoreError.fileReadError(fileURL, error.localizedDescription)
+        }
+        
+        do {
+            profiles = try JSONDecoder().decode([ConnectionProfile].self, from: data)
+            isInitialized = true
+            return profiles
+        } catch let decodingError as DecodingError {
+            throw ProfileStoreError.decodingError(decodingError.localizedDescription)
+        } catch {
+            throw ProfileStoreError.fileReadError(fileURL, error.localizedDescription)
+        }
     }
     
-    /// Save profiles to disk
-    func save(_ newProfiles: [ConnectionProfile]) async throws {
+    /// Save current profiles to disk atomically
+    func save() async throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         encoder.dateEncodingStrategy = .iso8601
-        let data = try encoder.encode(newProfiles)
-        try data.write(to: fileURL, options: .atomic)
-        profiles = newProfiles
+        
+        let data: Data
+        do {
+            data = try encoder.encode(profiles)
+        } catch let encodingError as EncodingError {
+            throw ProfileStoreError.encodingError(encodingError.localizedDescription)
+        } catch {
+            throw ProfileStoreError.encodingError(error.localizedDescription)
+        }
+        
+        // Write atomically using .atomic option
+        do {
+            try data.write(to: fileURL, options: .atomic)
+        } catch {
+            throw ProfileStoreError.fileWriteError(fileURL, error.localizedDescription)
+        }
+    }
+    
+    /// Get all profiles (loads if needed)
+    func allProfiles() async throws -> [ConnectionProfile] {
+        if !isInitialized {
+            _ = try await load()
+        }
+        return profiles
+    }
+    
+    /// Get a specific profile by ID
+    func profile(id: UUID) async throws -> ConnectionProfile? {
+        let all = try await allProfiles()
+        return all.first { $0.id == id }
+    }
+    
+    /// Get the default profile
+    func defaultProfile() async throws -> ConnectionProfile? {
+        let all = try await allProfiles()
+        return all.first { $0.isDefault } ?? all.first
     }
     
     /// Add a new profile
     func add(_ profile: ConnectionProfile) async throws {
-        var current = try await load()
+        var all = try await allProfiles()
+        
+        // Check for duplicate ID
+        guard !all.contains(where: { $0.id == profile.id }) else {
+            throw ConnectionError.profileNotFound(profile.id)
+        }
         
         // If this is set as default, unset others
         if profile.isDefault {
-            current = current.map { var p = $0; p.isDefault = false; return p }
+            all = all.map { var p = $0; p.isDefault = false; return p }
         }
         
-        current.append(profile)
-        try await save(current)
+        all.append(profile)
+        profiles = all
+        try await save()
     }
     
     /// Update an existing profile
     func update(_ profile: ConnectionProfile) async throws {
-        var current = try await load()
+        var all = try await allProfiles()
         
         // If this is set as default, unset others
         if profile.isDefault {
-            current = current.map { var p = $0; p.isDefault = (p.id == profile.id); return p }
+            all = all.map { var p = $0; p.isDefault = (p.id == profile.id); return p }
         }
         
-        guard let index = current.firstIndex(where: { $0.id == profile.id }) else {
-            throw ConnectionError.profileNotFound
+        guard let index = all.firstIndex(where: { $0.id == profile.id }) else {
+            throw ConnectionError.profileNotFound(profile.id)
         }
         
-        current[index] = profile
-        try await save(current)
+        all[index] = profile
+        profiles = all
+        try await save()
     }
     
-    /// Remove a profile
+    /// Remove a profile and its associated token
     func remove(id: UUID) async throws {
-        var current = try await load()
-        current.removeAll { $0.id == id }
-        try await save(current)
-    }
-    
-    /// Get the default profile, or the first available
-    func defaultProfile() async throws -> ConnectionProfile? {
-        let current = try await load()
-        return current.first { $0.isDefault } ?? current.first
+        var all = try await allProfiles()
+        
+        // Delete associated token first
+        try? deleteToken(for: id)
+        
+        all.removeAll { $0.id == id }
+        profiles = all
+        try await save()
     }
     
     /// Set a profile as the default
     func setDefault(id: UUID) async throws {
-        var current = try await load()
-        current = current.map { var p = $0; p.isDefault = (p.id == id); return p }
-        try await save(current)
+        var all = try await allProfiles()
+        
+        guard all.contains(where: { $0.id == id }) else {
+            throw ConnectionError.profileNotFound(id)
+        }
+        
+        all = all.map { var p = $0; p.isDefault = (p.id == id); return p }
+        profiles = all
+        try await save()
     }
     
     /// Update last connected timestamp and latency for a profile
     func updateConnectionMetrics(id: UUID, latencyMs: Int?) async throws {
-        var current = try await load()
-        guard let index = current.firstIndex(where: { $0.id == id }) else {
-            throw ConnectionError.profileNotFound
+        var all = try await allProfiles()
+        guard let index = all.firstIndex(where: { $0.id == id }) else {
+            throw ConnectionError.profileNotFound(id)
+        }
+
+        all[index].lastConnected = Date()
+        all[index].lastLatencyMs = latencyMs
+        profiles = all  // Update the actor's profiles array
+        try await save()
+    }
+    
+    /// Reset to default profiles (useful for testing or recovery)
+    func resetToDefaults() async throws {
+        // Delete all tokens first
+        for profile in profiles {
+            try? deleteToken(for: profile.id)
         }
         
-        current[index].lastConnected = Date()
-        current[index].lastLatencyMs = latencyMs
-        try await save(current)
+        profiles = [ConnectionProfile.local]
+        try await save()
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func createDirectoryIfNeeded() throws {
+        let directory = fileURL.deletingLastPathComponent()
+        
+        guard !FileManager.default.fileExists(atPath: directory.path) else {
+            return
+        }
+        
+        do {
+            try FileManager.default.createDirectory(
+                at: directory,
+                withIntermediateDirectories: true,
+                attributes: [.posixPermissions: 0o700] // Restrictive permissions
+            )
+        } catch {
+            throw ProfileStoreError.directoryCreationFailed(directory, error.localizedDescription)
+        }
     }
 }
 
-// MARK: - Keychain Integration
+// MARK: - Profile Keychain Integration
 
 extension ProfileStore {
     /// Save bearer token for a profile in Keychain

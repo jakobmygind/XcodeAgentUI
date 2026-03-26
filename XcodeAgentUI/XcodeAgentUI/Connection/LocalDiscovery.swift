@@ -193,8 +193,9 @@ struct ResolvedBackend: Sendable {
     let source: DiscoveredBackend.DiscoverySource
     
     /// Convert to a connection profile
-    func toProfile(kind: ProfileKind = .local) -> ConnectionProfile {
-        ConnectionProfile(
+    /// - Returns: A connection profile, or nil if the resolved data is invalid
+    func toProfile(kind: ProfileKind = .local) -> ConnectionProfile? {
+        try? ConnectionProfile(
             name: name,
             kind: kind,
             backendHost: host,

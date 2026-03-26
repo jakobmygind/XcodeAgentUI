@@ -8,14 +8,6 @@ final class ConnectionManager {
     var state: ConnectionState = .disconnected
     var activeProfile: ConnectionProfile?
     var availableProfiles: [ConnectionProfile] = []
-    
-    /// Feed mode for real-time updates
-    enum FeedMode: Equatable, Sendable {
-        case websocket       // real-time push — ideal
-        case polling(Int)    // HTTP polling interval in seconds — fallback
-        case offline         // no connection — show last known state
-    }
-    
     var feedMode: FeedMode = .offline
     
     private let store: ProfileStore
@@ -28,6 +20,9 @@ final class ConnectionManager {
     /// Maximum number of concurrent probes to prevent overwhelming the system
     private let maxConcurrentProbes = 10
     
+    /// Logger for connection events
+    private let logger = ConnectionLogger()
+    
     init(store: ProfileStore = .shared, webSocket: BridgeWebSocket? = nil) {
         self.store = store
         self.webSocket = webSocket
@@ -39,16 +34,22 @@ final class ConnectionManager {
     func loadProfiles() async {
         do {
             availableProfiles = try await store.load()
+            logger.log(.info, "Loaded \(availableProfiles.count) profiles")
         } catch {
+            logger.log(.error, "Failed to load profiles: \(error.localizedDescription)")
             state = .failed(.discoveryFailed(error.localizedDescription))
         }
     }
+    
+    // MARK: - Connection
     
     /// Connect to a specific profile with retry logic
     /// - Parameters:
     ///   - profile: The profile to connect to
     ///   - maxRetries: Maximum number of retry attempts (default: 0)
     func connect(to profile: ConnectionProfile, maxRetries: Int = 0) async {
+        logger.log(.info, "Connecting to profile: \(profile.name) (\(profile.endpointDescription))")
+        
         // Cancel any ongoing reconnection
         reconnectTask?.cancel()
         
@@ -56,10 +57,12 @@ final class ConnectionManager {
         do {
             try profile.validate()
         } catch let error as ConnectionProfile.ValidationError {
-            state = .failed(.discoveryFailed(error.localizedDescription ?? "Invalid profile"))
+            logger.log(.error, "Profile validation failed: \(error.localizedDescription ?? "Unknown error")")
+            state = .failed(.invalidProfile(error.localizedDescription ?? "Invalid profile"))
             return
         } catch {
-            state = .failed(.discoveryFailed("Profile validation failed"))
+            logger.log(.error, "Profile validation failed")
+            state = .failed(.invalidProfile("Validation failed"))
             return
         }
         
@@ -84,6 +87,7 @@ final class ConnectionManager {
                 // Check protocol version compatibility
                 if let health = result.healthResponse {
                     guard health.protocolVersion >= ConnectionProfile.minimumProtocolVersion else {
+                        logger.log(.error, "Backend version mismatch: got \(health.protocolVersion), need \(ConnectionProfile.minimumProtocolVersion)")
                         throw ConnectionError.backendVersionMismatch(
                             backend: health.version,
                             minRequired: "\(ConnectionProfile.minimumProtocolVersion)"
@@ -102,11 +106,14 @@ final class ConnectionManager {
                 // Update metrics
                 try? await store.updateConnectionMetrics(id: profile.id, latencyMs: result.latencyMs)
                 
+                logger.log(.info, "Successfully connected to \(profile.name) (latency: \(result.latencyMs)ms)")
+                
                 // Success - return
                 return
                 
             } catch let error as ConnectionError {
                 lastError = error
+                logger.log(.warning, "Connection attempt \(attempt + 1) failed: \(error.localizedDescription)")
                 
                 // Don't retry on auth failures
                 if case .authenticationFailed = error {
@@ -118,20 +125,25 @@ final class ConnectionManager {
                 // If we have more retries, wait before trying again
                 if attempt < maxRetries {
                     let delay = min(pow(2.0, Double(attempt)), 5.0)  // Max 5s between retries
+                    logger.log(.debug, "Waiting \(String(format: "%.1f", delay))s before retry")
                     try? await Task.sleep(for: .seconds(delay))
                 }
             } catch {
                 lastError = .healthCheckFailed
+                logger.log(.error, "Unexpected error: \(error.localizedDescription)")
             }
         }
         
         // All retries exhausted
+        logger.log(.error, "All connection attempts failed")
         state = .failed(lastError ?? .healthCheckFailed)
         feedMode = .offline
     }
     
     /// Connect with automatic fallback through all available profiles
     func connectWithFallback() async {
+        logger.log(.info, "Starting fallback connection sequence")
+        
         await loadProfiles()
         
         let ordered = prioritize(availableProfiles)
@@ -145,18 +157,23 @@ final class ConnectionManager {
             await connect(to: profile, maxRetries: retries)
             
             if case .connected = state {
+                logger.log(.info, "Connected to \(profile.name) via fallback")
                 return
             }
         }
         
+        logger.log(.error, "All profiles failed to connect")
         state = .failed(.allProfilesFailed)
     }
     
     /// Connect to the fastest responding profile
     func connectToFastest(timeout: TimeInterval = 10) async {
+        logger.log(.info, "Starting parallel probe for fastest connection")
+        
         await loadProfiles()
         
         guard !availableProfiles.isEmpty else {
+            logger.log(.error, "No configured profiles available")
             state = .failed(.allProfilesFailed)
             return
         }
@@ -209,14 +226,17 @@ final class ConnectionManager {
         
         // Connect to fastest, or fall back to priority order
         if let fastest = successful.first {
+            logger.log(.info, "Fastest profile: \(fastest.profile.name) (\(fastest.latencyMs)ms)")
             await connect(to: fastest.profile)
         } else {
+            logger.log(.warning, "No successful probes, falling back to priority order")
             await connectWithFallback()
         }
     }
     
     /// Disconnect from current backend
     func disconnect() {
+        logger.log(.info, "Disconnecting from \(activeProfile?.name ?? "unknown")")
         reconnectTask?.cancel()
         webSocket?.disconnect()
         activeProfile = nil
@@ -233,11 +253,42 @@ final class ConnectionManager {
         await connect(to: profile, maxRetries: 3)
     }
     
+    /// Handle WebSocket failure by falling back to polling
+    func handleWebSocketFailure(reason: String) {
+        logger.log(.warning, "WebSocket failure: \(reason)")
+        
+        guard case .connected(let profile) = state else {
+            logger.log(.debug, "Not in connected state, ignoring WebSocket failure")
+            return
+        }
+        
+        feedMode = .polling(5)  // Poll every 5 seconds
+        
+        // Start background reconnection attempts
+        startReconnect(profile: profile)
+    }
+    
+    /// Mark the current WebSocket as recovered
+    func markWebSocketRecovered() {
+        logger.log(.info, "WebSocket recovered")
+        if case .connected = state {
+            feedMode = .websocket
+            reconnectTask?.cancel()
+            reconnectTask = nil
+        }
+    }
+    
     /// Get the last probe result for a profile
     func probeResult(for profileID: UUID) -> ProbeResult? {
         probeResultsLock.lock()
         defer { probeResultsLock.unlock() }
         return probeResults[profileID]
+    }
+    
+    /// Get the authorization header for the active profile
+    func authorizationHeader() async -> String? {
+        guard let profile = activeProfile else { return nil }
+        return store.resolveToken("keychain-ref", for: profile.id)
     }
     
     // MARK: - Probing
@@ -250,9 +301,9 @@ final class ConnectionManager {
         do {
             try profile.validate()
         } catch let error as ConnectionProfile.ValidationError {
-            return .failure(profile: profile, error: .discoveryFailed(error.localizedDescription ?? "Invalid profile"))
+            return .failure(profile: profile, error: .invalidProfile(error.localizedDescription ?? "Invalid profile"))
         } catch {
-            return .failure(profile: profile, error: .discoveryFailed("Profile validation failed"))
+            return .failure(profile: profile, error: .invalidProfile("Validation failed"))
         }
         
         guard let url = profile.healthURL else {
@@ -266,15 +317,15 @@ final class ConnectionManager {
         
         // Apply auth if needed
         if case .bearerToken = profile.authMethod {
-            let token = await store.resolveToken("keychain-ref", for: profile.id)
+            let token = store.resolveToken("keychain-ref", for: profile.id)
             profile.authMethod.apply(to: &request) { _ in token }
         }
         
-        let start = ContinuousClock().now
+        let startTime = Date()
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
-            let latencyMs = Int((ContinuousClock().now - start).components.attoseconds / 1_000_000_000_000_000)
+            let latencyMs = Int(Date().timeIntervalSince(startTime) * 1000)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(profile: profile, error: .healthCheckFailed)
@@ -353,7 +404,7 @@ final class ConnectionManager {
         ws.port = profile.backendPort
         
         // Connect with token if needed
-        let token = await store.resolveToken("keychain-ref", for: profile.id)
+        let token = store.resolveToken("keychain-ref", for: profile.id)
         
         // The actual WebSocket connection happens via the BridgeWebSocket class
         if let token = token {
@@ -396,6 +447,7 @@ final class ConnectionManager {
     /// Start automatic reconnection with exponential backoff
     private func startReconnect(profile: ConnectionProfile, attempt: Int = 1) {
         guard attempt <= maxReconnectAttempts else {
+            logger.log(.error, "Max reconnection attempts reached")
             state = .failed(.allProfilesFailed)
             return
         }
@@ -403,6 +455,7 @@ final class ConnectionManager {
         state = .reconnecting(lastProfile: profile, attempt: attempt)
         
         let delay = min(pow(2.0, Double(attempt - 1)), 30.0)  // Max 30s
+        logger.log(.info, "Reconnection attempt \(attempt)/\(maxReconnectAttempts) in \(String(format: "%.1f", delay))s")
         
         reconnectTask = Task { [weak self] in
             do {
@@ -418,11 +471,29 @@ final class ConnectionManager {
             
             if case .connected = self.state {
                 // Reconnected successfully
+                self.logger.log(.info, "Reconnection successful")
                 return
             } else {
                 // Try again
                 self.startReconnect(profile: profile, attempt: attempt + 1)
             }
         }
+    }
+}
+
+// MARK: - Connection Logger
+
+/// Simple logger for connection events
+private struct ConnectionLogger: Sendable {
+    enum Level: String, Sendable {
+        case debug = "DEBUG"
+        case info = "INFO"
+        case warning = "WARN"
+        case error = "ERROR"
+    }
+    
+    func log(_ level: Level, _ message: String) {
+        let timestamp = ISO8601DateFormatter().string(from: Date())
+        print("[\(timestamp)] [ConnectionManager] [\(level.rawValue)] \(message)")
     }
 }

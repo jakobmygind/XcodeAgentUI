@@ -228,8 +228,9 @@ struct TailscalePeer: Identifiable, Hashable, Sendable {
     }
     
     /// Convert to a connection profile
-    func toProfile(port: Int = 9300) -> ConnectionProfile {
-        ConnectionProfile(
+    /// - Returns: A connection profile, or nil if the peer data is invalid
+    func toProfile(port: Int = 9300) -> ConnectionProfile? {
+        try? ConnectionProfile(
             name: "Tailscale: \(hostname)",
             kind: .tailscale,
             backendHost: tailscaleIP,

@@ -12,7 +12,7 @@ enum ConnectionError: LocalizedError, Sendable, Equatable {
     case invalidURL
     case networkUnavailable
     case discoveryFailed(String)
-    case profileNotFound
+    case profileNotFound(UUID)
     case keychainError(String)
     case invalidProfile(String)
     
@@ -77,6 +77,40 @@ enum ConnectionError: LocalizedError, Sendable, Equatable {
             return "Fix profile configuration: \(reason)"
         }
     }
+    
+    /// Compare two errors for equality based on their type and key properties
+    func isEqual(to other: ConnectionError) -> Bool {
+        switch (self, other) {
+        case (.healthCheckFailed, .healthCheckFailed):
+            return true
+        case (.healthCheckTimeout, .healthCheckTimeout):
+            return true
+        case (.webSocketUpgradeFailed, .webSocketUpgradeFailed):
+            return true
+        case (.authenticationFailed, .authenticationFailed):
+            return true
+        case (.allProfilesFailed, .allProfilesFailed):
+            return true
+        case (.backendVersionMismatch(let v1, let m1), .backendVersionMismatch(let v2, let m2)):
+            return v1 == v2 && m1 == m2
+        case (.tailscaleNotRunning, .tailscaleNotRunning):
+            return true
+        case (.invalidURL, .invalidURL):
+            return true
+        case (.networkUnavailable, .networkUnavailable):
+            return true
+        case (.discoveryFailed(let r1), .discoveryFailed(let r2)):
+            return r1 == r2
+        case (.profileNotFound(let id1), .profileNotFound(let id2)):
+            return id1 == id2
+        case (.keychainError(let r1), .keychainError(let r2)):
+            return r1 == r2
+        case (.invalidProfile(let r1), .invalidProfile(let r2)):
+            return r1 == r2
+        default:
+            return false
+        }
+    }
 }
 
 /// Health check response from backend
@@ -96,7 +130,7 @@ struct HealthResponse: Codable, Sendable {
 }
 
 /// Connection state for UI representation
-enum ConnectionState: Sendable {
+enum ConnectionState: Sendable, Equatable {
     case disconnected
     case connecting(ProfileKind)
     case connected(ConnectionProfile)
@@ -114,7 +148,7 @@ enum ConnectionState: Sendable {
         case (.reconnecting(let a1, let a2), .reconnecting(let b1, let b2)):
             return a1.id == b1.id && a2 == b2
         case (.failed(let a), .failed(let b)):
-            return a.localizedDescription == b.localizedDescription
+            return a.isEqual(to: b)
         default:
             return false
         }
@@ -156,6 +190,13 @@ enum ConnectionState: Sendable {
             return error.localizedDescription
         }
     }
+}
+
+/// Feed mode for real-time updates
+enum FeedMode: Equatable, Sendable {
+    case websocket       // real-time push — ideal
+    case polling(Int)    // HTTP polling interval in seconds — fallback
+    case offline         // no connection — show last known state
 }
 
 /// Result of a latency probe
@@ -207,5 +248,29 @@ struct ProbeResult: Sendable {
             error: error,
             healthResponse: nil
         )
+    }
+}
+
+/// Errors that can occur during profile storage operations
+enum ProfileStoreError: LocalizedError, Sendable {
+    case fileReadError(URL, String)
+    case fileWriteError(URL, String)
+    case decodingError(String)
+    case encodingError(String)
+    case directoryCreationFailed(URL, String)
+    
+    var errorDescription: String? {
+        switch self {
+        case .fileReadError(let url, let details):
+            return "Failed to read profiles from \(url.path): \(details)"
+        case .fileWriteError(let url, let details):
+            return "Failed to write profiles to \(url.path): \(details)"
+        case .decodingError(let details):
+            return "Failed to decode profiles: \(details)"
+        case .encodingError(let details):
+            return "Failed to encode profiles: \(details)"
+        case .directoryCreationFailed(let url, let details):
+            return "Failed to create directory at \(url.path): \(details)"
+        }
     }
 }
