@@ -1,0 +1,108 @@
+import Foundation
+import Security
+
+/// Manages API tokens in the macOS Keychain
+public struct KeychainManager {
+  public static let servicePrefix = "com.openclaw.xcode-agent-ui"
+
+  public enum TokenKey: Codable, Hashable {
+    case githubToken
+    case gitlabToken
+    case jiraToken
+    case jiraEmail
+    case shortcutToken
+    case telegramBotToken
+    case telegramChatID
+    case custom(String)
+
+    public var rawValue: String {
+      switch self {
+      case .githubToken: return "github-token"
+      case .gitlabToken: return "gitlab-token"
+      case .jiraToken: return "jira-token"
+      case .jiraEmail: return "jira-email"
+      case .shortcutToken: return "shortcut-token"
+      case .telegramBotToken: return "telegram-bot-token"
+      case .telegramChatID: return "telegram-chat-id"
+      case .custom(let value): return value
+      }
+    }
+
+    public var label: String {
+      switch self {
+      case .githubToken: return "Personal Access Token"
+      case .gitlabToken: return "Access Token"
+      case .jiraToken: return "API Token"
+      case .jiraEmail: return "Email"
+      case .shortcutToken: return "API Token"
+      case .telegramBotToken: return "Bot Token"
+      case .telegramChatID: return "Chat ID"
+      case .custom: return "Custom Token"
+      }
+    }
+
+    public var placeholder: String {
+      switch self {
+      case .githubToken: return "ghp_..."
+      case .gitlabToken: return "glpat-..."
+      case .jiraToken: return "Jira API token"
+      case .jiraEmail: return "you@company.com"
+      case .shortcutToken: return "Shortcut API token"
+      case .telegramBotToken: return "123456:ABC-DEF..."
+      case .telegramChatID: return "-1001234567890"
+      case .custom: return "Token"
+      }
+    }
+
+    public static var allCases: [TokenKey] {
+      [.githubToken, .gitlabToken, .jiraToken, .jiraEmail, .shortcutToken, .telegramBotToken, .telegramChatID]
+    }
+  }
+
+  @discardableResult
+  public static func save(key: TokenKey, value: String) -> Bool {
+    delete(key: key)
+
+    guard let data = value.data(using: .utf8) else { return false }
+
+    let query: [String: Any] = [
+      kSecClass as String: kSecClassGenericPassword,
+      kSecAttrService as String: servicePrefix,
+      kSecAttrAccount as String: key.rawValue,
+      kSecValueData as String: data,
+      kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+    ]
+
+    return SecItemAdd(query as CFDictionary, nil) == errSecSuccess
+  }
+
+  public static func load(key: TokenKey) -> String? {
+    let query: [String: Any] = [
+      kSecClass as String: kSecClassGenericPassword,
+      kSecAttrService as String: servicePrefix,
+      kSecAttrAccount as String: key.rawValue,
+      kSecReturnData as String: true,
+      kSecMatchLimit as String: kSecMatchLimitOne,
+    ]
+
+    var result: AnyObject?
+    let status = SecItemCopyMatching(query as CFDictionary, &result)
+
+    guard status == errSecSuccess, let data = result as? Data else { return nil }
+    return String(data: data, encoding: .utf8)
+  }
+
+  @discardableResult
+  public static func delete(key: TokenKey) -> Bool {
+    let query: [String: Any] = [
+      kSecClass as String: kSecClassGenericPassword,
+      kSecAttrService as String: servicePrefix,
+      kSecAttrAccount as String: key.rawValue,
+    ]
+    return SecItemDelete(query as CFDictionary) == errSecSuccess
+  }
+
+  public static func hasValue(key: TokenKey) -> Bool {
+    load(key: key) != nil
+  }
+}

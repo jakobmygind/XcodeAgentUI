@@ -1,0 +1,17 @@
+# SPM
+.build/
+.swiftpm/
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# Claude Code
+.claude/
+
+# macOS
+.DS_Store
+
+# Credentials
+**/Credentials.xcconfig

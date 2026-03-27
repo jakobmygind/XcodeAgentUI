@@ -1,0 +1,24 @@
+// Providers.xcconfig
+// Default provider configuration for XcodeAgentUI
+// These values are compiled into the app bundle as defaults.
+// Override at runtime via the Providers tab in Settings.
+
+// --- GitHub ---
+PROVIDER_GITHUB_NAME = GitHub
+PROVIDER_GITHUB_BASE_URL = https:/$()/api.github.com
+PROVIDER_GITHUB_TYPE = github
+
+// --- GitLab ---
+PROVIDER_GITLAB_NAME = GitLab
+PROVIDER_GITLAB_BASE_URL = https:/$()/gitlab.com/api/v4
+PROVIDER_GITLAB_TYPE = gitlab
+
+// --- Jira ---
+PROVIDER_JIRA_NAME = Jira
+PROVIDER_JIRA_BASE_URL = https:/$()/your-domain.atlassian.net
+PROVIDER_JIRA_TYPE = jira
+
+// --- Shortcut ---
+PROVIDER_SHORTCUT_NAME = Shortcut
+PROVIDER_SHORTCUT_BASE_URL = https:/$()/api.app.shortcut.com
+PROVIDER_SHORTCUT_TYPE = shortcut
