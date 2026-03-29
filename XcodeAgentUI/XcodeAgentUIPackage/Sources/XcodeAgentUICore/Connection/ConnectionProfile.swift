@@ -11,6 +11,22 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case kind
+        case backendHost
+        case backendPort
+        case httpPort
+        case webSocketPort
+        case useTLS
+        case authMethod
+        case isDefault
+        case lastConnected
+        case lastLatencyMs
+    }
+
     /// Minimum supported protocol version for compatibility
     public static let minimumProtocolVersion = 1
     
@@ -22,7 +38,13 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     public var name: String
     public var kind: ProfileKind
     public var backendHost: String
-    public var backendPort: Int
+    /// Legacy compatibility alias for the bridge/WebSocket port.
+    public var backendPort: Int {
+        get { webSocketPort }
+        set { webSocketPort = newValue }
+    }
+    public var httpPort: Int
+    public var webSocketPort: Int
     public var useTLS: Bool
     public var authMethod: AuthMethod
     public var isDefault: Bool
@@ -56,6 +78,8 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
         kind: ProfileKind,
         backendHost: String,
         backendPort: Int,
+        httpPort: Int? = nil,
+        webSocketPort: Int? = nil,
         useTLS: Bool = false,
         authMethod: AuthMethod = .none,
         isDefault: Bool = false,
@@ -70,9 +94,16 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
             throw .emptyName
         }
 
+        let resolvedWebSocketPort = webSocketPort ?? backendPort
+        let resolvedHTTPPort = httpPort ?? backendPort
+
         // Validate port range
-        guard backendPort > 0 && backendPort <= 65535 else {
-            throw .invalidPort(backendPort)
+        guard resolvedWebSocketPort > 0 && resolvedWebSocketPort <= 65535 else {
+            throw .invalidPort(resolvedWebSocketPort)
+        }
+
+        guard resolvedHTTPPort > 0 && resolvedHTTPPort <= 65535 else {
+            throw .invalidPort(resolvedHTTPPort)
         }
 
         // Validate host characters (if host is provided)
@@ -88,7 +119,8 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
         self.name = trimmedName
         self.kind = kind
         self.backendHost = trimmedHost
-        self.backendPort = backendPort
+        self.httpPort = resolvedHTTPPort
+        self.webSocketPort = resolvedWebSocketPort
         self.useTLS = useTLS
         self.authMethod = authMethod
         self.isDefault = isDefault
@@ -106,8 +138,12 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
             throw .emptyHost
         }
         
-        guard backendPort > 0 && backendPort <= 65535 else {
-            throw .invalidPort(backendPort)
+        guard webSocketPort > 0 && webSocketPort <= 65535 else {
+            throw .invalidPort(webSocketPort)
+        }
+
+        guard httpPort > 0 && httpPort <= 65535 else {
+            throw .invalidPort(httpPort)
         }
         
         // Check for invalid characters in host
@@ -123,7 +159,7 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     public var baseURL: URL? {
         guard !backendHost.isEmpty else { return nil }
         let scheme = useTLS ? "https" : "http"
-        let urlString = "\(scheme)://\(backendHost):\(backendPort)"
+        let urlString = "\(scheme)://\(backendHost):\(httpPort)"
         return URL(string: urlString)
     }
 
@@ -132,7 +168,7 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     public var wsURL: URL? {
         guard !backendHost.isEmpty else { return nil }
         let scheme = useTLS ? "wss" : "ws"
-        let urlString = "\(scheme)://\(backendHost):\(backendPort)"
+        let urlString = "\(scheme)://\(backendHost):\(webSocketPort)"
         return URL(string: urlString)
     }
 
@@ -141,7 +177,7 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     public var healthURL: URL? {
         guard !backendHost.isEmpty else { return nil }
         guard let base = baseURL else { return nil }
-        return base.appendingPathComponent("api/health")
+        return base.appendingPathComponent("health")
     }
     
     /// WebSocket URL with query parameters for connection
@@ -176,12 +212,59 @@ public struct ConnectionProfile: Codable, Identifiable, Hashable, Sendable {
     
     /// Returns true if this profile is configured (has a valid host)
     public var isConfigured: Bool {
-        !backendHost.isEmpty && backendPort > 0 && backendPort <= 65535
+        !backendHost.isEmpty && httpPort > 0 && httpPort <= 65535 && webSocketPort > 0 && webSocketPort <= 65535
     }
     
     /// Human-readable description of the connection endpoint
     public var endpointDescription: String {
-        "\(backendHost):\(backendPort)"
+        "\(backendHost) · http:\(httpPort) / ws:\(webSocketPort)"
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        let name = try container.decode(String.self, forKey: .name)
+        let kind = try container.decode(ProfileKind.self, forKey: .kind)
+        let backendHost = try container.decode(String.self, forKey: .backendHost)
+        let legacyPort = try container.decodeIfPresent(Int.self, forKey: .backendPort)
+        let httpPort = try container.decodeIfPresent(Int.self, forKey: .httpPort)
+        let webSocketPort = try container.decodeIfPresent(Int.self, forKey: .webSocketPort)
+        let useTLS = try container.decodeIfPresent(Bool.self, forKey: .useTLS) ?? false
+        let authMethod = try container.decodeIfPresent(AuthMethod.self, forKey: .authMethod) ?? .none
+        let isDefault = try container.decodeIfPresent(Bool.self, forKey: .isDefault) ?? false
+        let lastConnected = try container.decodeIfPresent(Date.self, forKey: .lastConnected)
+        let lastLatencyMs = try container.decodeIfPresent(Int.self, forKey: .lastLatencyMs)
+
+        try self.init(
+            id: id,
+            name: name,
+            kind: kind,
+            backendHost: backendHost,
+            backendPort: legacyPort ?? webSocketPort ?? ConnectionProfile.defaultWebSocketPort,
+            httpPort: httpPort,
+            webSocketPort: webSocketPort,
+            useTLS: useTLS,
+            authMethod: authMethod,
+            isDefault: isDefault,
+            lastConnected: lastConnected,
+            lastLatencyMs: lastLatencyMs
+        )
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(kind, forKey: .kind)
+        try container.encode(backendHost, forKey: .backendHost)
+        try container.encode(httpPort, forKey: .httpPort)
+        try container.encode(webSocketPort, forKey: .webSocketPort)
+        try container.encode(webSocketPort, forKey: .backendPort)
+        try container.encode(useTLS, forKey: .useTLS)
+        try container.encode(authMethod, forKey: .authMethod)
+        try container.encode(isDefault, forKey: .isDefault)
+        try container.encodeIfPresent(lastConnected, forKey: .lastConnected)
+        try container.encodeIfPresent(lastLatencyMs, forKey: .lastLatencyMs)
     }
 }
 
@@ -317,6 +400,8 @@ extension ConnectionProfile {
             kind: .local,
             backendHost: "localhost",
             backendPort: defaultWebSocketPort,
+            httpPort: defaultHTTPPort,
+            webSocketPort: defaultWebSocketPort,
             useTLS: false,
             authMethod: .none,
             isDefault: true
@@ -324,12 +409,14 @@ extension ConnectionProfile {
     }
     
     /// Template for Tailscale profile (host to be filled in)
-    public static func tailscale(host: String, port: Int = defaultWebSocketPort) -> ConnectionProfile {
+    public static func tailscale(host: String, httpPort: Int = defaultHTTPPort, webSocketPort: Int = defaultWebSocketPort) -> ConnectionProfile {
         try! ConnectionProfile(
             name: "Tailscale (\(host))",
             kind: .tailscale,
             backendHost: host,
-            backendPort: port,
+            backendPort: webSocketPort,
+            httpPort: httpPort,
+            webSocketPort: webSocketPort,
             useTLS: false,
             authMethod: .bearerToken("keychain-ref"),
             isDefault: false

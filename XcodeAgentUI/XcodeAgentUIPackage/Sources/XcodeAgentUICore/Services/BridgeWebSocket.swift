@@ -86,13 +86,12 @@ public final class BridgeWebSocket: @unchecked Sendable {
 
   @MainActor
   public func send(type: String, payload: String) {
-    let command: [String: Any] = [
-      "command": payload,
-      "target": type == "human_command" ? NSNull() : type,
-      "timestamp": Int(Date().timeIntervalSince1970 * 1000),
+    let envelope: [String: Any] = [
+      "type": type,
+      "payload": payload,
     ]
 
-    guard let data = try? JSONSerialization.data(withJSONObject: command),
+    guard let data = try? JSONSerialization.data(withJSONObject: envelope),
       let str = String(data: data, encoding: .utf8)
     else { return }
 

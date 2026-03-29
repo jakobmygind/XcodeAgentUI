@@ -80,7 +80,7 @@ public final class SessionManager {
   public func sendCommand(_ text: String) {
     guard let session = activeSession else { return }
 
-    bridgeWS.send(type: session.ticketID, payload: text)
+    bridgeWS.send(type: "human_command", payload: text)
 
     session.addFeedMessage(
       FeedMessage(

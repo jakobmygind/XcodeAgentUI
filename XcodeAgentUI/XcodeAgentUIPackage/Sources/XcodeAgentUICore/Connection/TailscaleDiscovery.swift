@@ -34,7 +34,7 @@ public final class TailscaleDiscovery {
     }
     
     /// Discover Tailscale peers and probe for OpenClaw backends
-    public func discoverPeers(probeForBackends: Bool = true, port: Int = 9300) async {
+    public func discoverPeers(probeForBackends: Bool = true, port: Int = ConnectionProfile.defaultHTTPPort) async {
         state = .discovering
         discoveredPeers = []
         responsiveBackends = []
@@ -115,8 +115,8 @@ public final class TailscaleDiscovery {
     }
     
     /// Probe a specific peer for OpenClaw backend
-    public func probeForAgent(peer: TailscalePeer, port: Int = 9300) async -> Bool {
-        let url = URL(string: "http://\(peer.tailscaleIP):\(port)/api/health")!
+    public func probeForAgent(peer: TailscalePeer, port: Int = ConnectionProfile.defaultHTTPPort) async -> Bool {
+        let url = URL(string: "http://\(peer.tailscaleIP):\(port)/health")!
         let request = URLRequest(url: url, timeoutInterval: 3)
         
         do {
@@ -247,12 +247,14 @@ public struct TailscalePeer: Identifiable, Hashable, Sendable {
     
     /// Convert to a connection profile
     /// - Returns: A connection profile, or nil if the peer data is invalid
-    public func toProfile(port: Int = 9300) -> ConnectionProfile? {
+    public func toProfile(httpPort: Int = ConnectionProfile.defaultHTTPPort, webSocketPort: Int = ConnectionProfile.defaultWebSocketPort) -> ConnectionProfile? {
         try? ConnectionProfile(
             name: "Tailscale: \(hostname)",
             kind: .tailscale,
-            backendHost: tailscaleIP,
-            backendPort: port,
+            backendHost: magicDNS.trimmingCharacters(in: CharacterSet(charactersIn: ".")).isEmpty ? tailscaleIP : magicDNS.trimmingCharacters(in: CharacterSet(charactersIn: ".")),
+            backendPort: webSocketPort,
+            httpPort: httpPort,
+            webSocketPort: webSocketPort,
             useTLS: false,
             authMethod: .bearerToken("keychain-ref"),
             isDefault: false

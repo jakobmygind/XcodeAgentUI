@@ -172,7 +172,7 @@ final class ConnectionProfileTests: XCTestCase {
             backendPort: 3800
         )
         
-        XCTAssertEqual(profile.healthURL?.absoluteString, "http://localhost:3800/api/health")
+        XCTAssertEqual(profile.healthURL?.absoluteString, "http://localhost:3800/health")
     }
     
     func testNilURLForInvalidHost() throws {
